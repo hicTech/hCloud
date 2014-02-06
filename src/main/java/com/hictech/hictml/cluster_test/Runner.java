@@ -25,12 +25,16 @@ public class Runner implements Runnable {
 		return bytes;
 	}
 	
+	private String set_id;
+	private String obj_id;
 	private long mseconds;
 	private int mbytes;
 	private String mode;
 	private long cycles;
 	
-	public Runner(String mode, long ms, int size) {
+	public Runner(String set_id, String obj_id, String mode, long ms, int size) {
+		this.set_id = set_id;
+		this.obj_id = obj_id;
 		this.mode = mode;
 		this.mseconds = ms;
 		this.mbytes = size;
@@ -50,10 +54,13 @@ public class Runner implements Runnable {
 	}
 	
 	private void sleep(long ms) throws Exception {
+		HCommon.println("executing sleep test %s of object %s for %sms", set_id, obj_id, ms);
 		Thread.sleep(ms);
+		HCommon.println("executed sleep test %s of object %s for %sms", ms);
 	}
 	
 	private void cpu(long ms) throws Exception {
+		HCommon.println("executing cpu test %s of object %s for %sms", ms);
 		long start = HCommon.time();
 		
 		while( true ) {
@@ -66,6 +73,8 @@ public class Runner implements Runnable {
 			
 			cycles++;
 		}
+		
+		HCommon.println("executed cpu test %s of object %s for %sms", ms);
 	}
 	
 	@Override

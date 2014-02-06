@@ -14,54 +14,67 @@ public class HazelcastCache implements Cache {
 	}
 	
 	public Object get(String key) {
+		HCommon.print("executing get with key %s on hazelcast", key);
 		Object value;
 		
+		HCommon.println("obtain lock for key %s", key);
 		cache.lock(key);
 		try {
 			value = cache.get(key);
+			HCommon.println("get object with key %s and value %s", key, value);
 		}
 		finally {
 			cache.unlock(key);
 		}
+		HCommon.println("release lock for key %s", key);
 		
 		return value;
 	}
 
 	public Object getOrLoad(String key, CacheSource source) {
+
+		HCommon.print("executing getOrLoad with key %s on hazelcast", key);
 		Object value;
 		
+		HCommon.println("obtain lock for key %s", key);
 		cache.lock(key);
 		try {
 			value = cache.get(key);
-			HCommon.println("Cache ", this, " -> richiesto oggetto ", key, ", presente ? ", (value != null));
+			HCommon.println("get object with key %s and value %s", key, value);
 	
 			if( value == null ) {
 				value = source.load(key);
 	
 				cache.put(key, value);
+				HCommon.println("put object with key %s and value %s", key, value);
 			}
 		}
 		finally {
 			cache.unlock(key);
 		}
+		HCommon.println("release lock for key %s", key);
 
 		return value;
 	}
 
 	public Object put(String key, Object value) {
+		HCommon.print("executing put with key %s and value on hazelcast", key, value);
 		Object oldValue;
 		
+		HCommon.println("obtain lock for key %s", key);
 		cache.lock(key);
 		try {
-			HCommon.println("Cache ", this, " -> inserimento oggetto ", key);
-	
 			oldValue = cache.get(key);
-	
+			HCommon.println("get old object with key %s and value %s", key, value);
+
 			cache.put(key, value);
+			HCommon.println("put new object with key %s and value %s", key, value);
+
 		}
 		finally {
 			cache.unlock(key);
 		}
+		HCommon.println("release lock for key %s", key);
 
 		return oldValue;
 	}
