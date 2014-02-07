@@ -85,13 +85,13 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 	}
 	
 	
-	public Map<String, Object> test(Runner runner, String set_id) throws Exception{
+	public Map<String, Object> test(Runner runner) throws Exception{
 		Map<String, Object> test_obj = null;
 		
 		long millis = runner.getMSeconds();
 		String obj_id = (""+this.id());
 		long start_ms = System.currentTimeMillis();
-		System.out.println("Test started for object "+obj_id+" within test set: "+set_id+" (millis: "+millis+")");
+		System.out.println("Test started for object "+obj_id+" within test set: "+runner.getSetId()+" (millis: "+millis+")");
 		
 		runner.run();
 		
@@ -99,7 +99,7 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 		Map<String, Object> host_info = Tester.hostInfo();
 		
 		long end_ms = System.currentTimeMillis();
-		System.out.println("Test done for object "+obj_id+" within test set: "+set_id+" (elapsed millis: "+(end_ms-start_ms)+"/"+millis+")");
+		System.out.println("Test done for object "+obj_id+" within test set: "+runner.getSetId()+" (elapsed millis: "+(end_ms-start_ms)+"/"+millis+")");
 		
 		test_obj = new HashMap<String, Object>();
 		test_obj.put("host", host_info);

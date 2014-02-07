@@ -25,20 +25,28 @@ public class Runner implements Runnable {
 		return bytes;
 	}
 	
-	private String set_id;
-	private String obj_id;
+	private String setId;
+	private String objId;
 	private long mseconds;
 	private int mbytes;
 	private String mode;
 	private long cycles;
 	
 	public Runner(String set_id, String obj_id, String mode, long ms, int size) {
-		this.set_id = set_id;
-		this.obj_id = obj_id;
+		this.setId = set_id;
+		this.objId = obj_id;
 		this.mode = mode;
 		this.mseconds = ms;
 		this.mbytes = size;
 		this.cycles = 0;
+	}
+	
+	public String getObjId() {
+		return objId;
+	}
+	
+	public String getSetId() {
+		return setId;
 	}
 	
 	public long getMSeconds() {
@@ -54,13 +62,13 @@ public class Runner implements Runnable {
 	}
 	
 	private void sleep(long ms) throws Exception {
-		HCommon.printfln("executing sleep test %s of object %s for %sms", set_id, obj_id, ms);
+		HCommon.printfln("executing sleep test %s of object %s for %sms", setId, objId, ms);
 		Thread.sleep(ms);
-		HCommon.printfln("executed sleep test %s of object %s for %sms", set_id, obj_id, ms);
+		HCommon.printfln("executed sleep test %s of object %s for %sms", setId, objId, ms);
 	}
 	
 	private void cpu(long ms) throws Exception {
-		HCommon.printfln("executing cpu test %s of object %s for %sms", set_id, obj_id, ms);
+		HCommon.printfln("executing cpu test %s of object %s for %sms", setId, objId, ms);
 		long start = HCommon.time();
 		
 		while( true ) {
@@ -74,7 +82,7 @@ public class Runner implements Runnable {
 			cycles++;
 		}
 		
-		HCommon.printfln("executed cpu test %s of object %s for %sms", set_id, obj_id, ms);
+		HCommon.printfln("executed cpu test %s of object %s for %sms", setId, objId, ms);
 	}
 	
 	@Override

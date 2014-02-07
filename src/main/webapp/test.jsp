@@ -13,7 +13,7 @@
         String run_mode = request.getParameter("run_mode");
         
         /* Create the runner object */
-        Runner runner = new Runner(set_id, obj_id,run_mode, millis, mbytes);
+        Runner runner = new Runner(set_id, obj_id, run_mode, millis, mbytes);
 				
 		long ms = System.currentTimeMillis();
 		Map<String, Object> result = null;
@@ -21,7 +21,7 @@
     
 		try{
 			Tester tester = Tester.get(cluster_mode);
-			result = tester.test(runner, set_id, obj_id);
+			result = tester.test(runner);
 		}catch(Exception e){
             e.printStackTrace();
 			error = new HashMap<String, Object>();

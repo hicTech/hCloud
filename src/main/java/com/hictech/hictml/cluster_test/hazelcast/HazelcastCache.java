@@ -32,7 +32,6 @@ public class HazelcastCache implements Cache {
 	}
 
 	public Object getOrLoad(String key, CacheSource source) {
-
 		HCommon.printfln("executing getOrLoad with key %s on hazelcast", key);
 		Object value;
 		

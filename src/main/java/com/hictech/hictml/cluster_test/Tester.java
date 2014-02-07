@@ -98,17 +98,20 @@ public class Tester{
 	
 	
 	
-	public Map<String, Object> test(Runner runner, String set_id, String obj_id) throws Exception{
-		Object cache_obj = cache.getOrLoad(obj_id, new FileCacheSource());
+	public Map<String, Object> test(Runner runner) throws Exception{
+		HCommon.printfln("starting cache getting og object %s", runner.getObjId());
+		Object cache_obj = cache.getOrLoad(runner.getObjId(), new FileCacheSource());
+		
 		TestObject obj = ((TestObject)cache_obj);
 		
+		HCommon.printfln("starting lock block on object %s", runner.getObjId());
 		Map<String, Object> result;
-		locker.lock(obj_id);
+		locker.lock(runner.getObjId());
 		{
-			result = obj.test(runner, set_id);
+			result = obj.test(runner);
 			writeObj(obj);
 		}
-		locker.unlock(obj_id);
+		locker.unlock(runner.getObjId());
 		return result;
 	}
 	
