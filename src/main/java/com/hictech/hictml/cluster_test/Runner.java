@@ -54,13 +54,13 @@ public class Runner implements Runnable {
 	}
 	
 	private void sleep(long ms) throws Exception {
-		HCommon.println("executing sleep test %s of object %s for %sms", set_id, obj_id, ms);
+		HCommon.printfln("executing sleep test %s of object %s for %sms", set_id, obj_id, ms);
 		Thread.sleep(ms);
-		HCommon.println("executed sleep test %s of object %s for %sms", ms);
+		HCommon.printfln("executed sleep test %s of object %s for %sms", set_id, obj_id, ms);
 	}
 	
 	private void cpu(long ms) throws Exception {
-		HCommon.println("executing cpu test %s of object %s for %sms", ms);
+		HCommon.printfln("executing cpu test %s of object %s for %sms", set_id, obj_id, ms);
 		long start = HCommon.time();
 		
 		while( true ) {
@@ -74,7 +74,7 @@ public class Runner implements Runnable {
 			cycles++;
 		}
 		
-		HCommon.println("executed cpu test %s of object %s for %sms", ms);
+		HCommon.printfln("executed cpu test %s of object %s for %sms", set_id, obj_id, ms);
 	}
 	
 	@Override
