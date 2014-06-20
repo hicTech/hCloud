@@ -1,85 +1,134 @@
 package com.hictech.hictml.cluster_test.infinispan;
+import static com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem.infinispan;
+import java.util.Date;
 
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
+import javax.transaction.TransactionManager;
 
-import com.hazelcast.core.IMap;
+import org.infinispan.AdvancedCache;
+
 import com.hictech.hictml.cluster_test.Cache;
 import com.hictech.hictml.cluster_test.CacheSource;
-import com.hictech.util.h.HCommon;
 
 public class InfinispanCache implements Cache {
 	
-	static EmbeddedCacheManager manager = new DefaultCacheManager(true);
-	private org.infinispan.Cache<String, Object> cache;
+	private AdvancedCache<Object, Object> cache;
 	
 	public InfinispanCache() {
-		this.cache = manager.getCache();
+		this.cache = infinispan().getCache().getAdvancedCache();
+	}
+	
+	@Deprecated
+	public static void log(Object... args) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("[").append(new Date().getTime()).append("] ");
+		for( Object arg: args ) {
+			sb.append(arg);
+		}
+		
+		System.out.println(sb);
 	}
 	
 	public Object get(String key) {
-		HCommon.printfln("executing get with key %s on hazelcast", key);
-		Object value = null;
-		
-//		HCommon.printfln("obtain lock for key %s", key);
-//		cache.lock(key);
-//		try {
-//			value = cache.get(key);
-//			HCommon.printfln("get object with key %s and value %s", key, value);
-//		}
-//		finally {
-//			cache.unlock(key);
-//		}
-//		HCommon.printfln("release lock for key %s", key);
-//		
-		return value;
+		try {
+			log("executing get with key ", key, "on infinispan");
+			Object value = null;
+			
+			
+			TransactionManager tx = cache.getTransactionManager();
+
+			try {
+				log("obtain lock for key ", key);
+				tx.begin();
+				cache.lock(key);
+				
+				value = cache.get(key);
+				log("get object with key ", key," and value ", value);
+				
+				tx.commit();
+			}
+			catch( Exception e ) {
+				tx.rollback();
+			}
+			
+			log("release lock for key ", key);
+			
+			return value;
+		}
+		catch( Exception e ) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Object getOrLoad(String key, CacheSource source) {
-		HCommon.printfln("executing getOrLoad with key %s on hazelcast", key);
-		Object value = null;
-		
-//		HCommon.printfln("obtain lock for key %s", key);
-//		cache.lock(key);
-//		try {
-//			value = cache.get(key);
-//			HCommon.printfln("get object with key %s and value %s", key, value);
-//	
-//			if( value == null ) {
-//				value = source.load(key);
-//	
-//				cache.put(key, value);
-//				HCommon.printfln("put object with key %s and value %s", key, value);
-//			}
-//		}
-//		finally {
-//			cache.unlock(key);
-//		}
-//		HCommon.printfln("release lock for key %s", key);
+		try {
+			log("executing getOrLoad with key ", key, " on infinispan");
+			Object value = null;
+			
+			
+			TransactionManager tx = cache.getTransactionManager();
 
-		return value;
+			try {
+				log("obtain lock for key ", key);
+				tx.begin();
+				cache.lock(key);
+
+				value = cache.get(key);
+				log("get object with key ", key, " and value", key);
+				
+				if( value == null ) {
+					value = source.load(key);
+		
+					cache.put(key, value);
+					log("put object with key ", key, "and value %s", value);
+				}
+				
+				tx.commit();
+			}
+			catch( Exception e ) {
+				tx.rollback();
+			}
+			
+			log("release lock for key ", key);
+			
+			return value;
+		}
+		catch( Exception e ) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Object put(String key, Object value) {
-		HCommon.printfln("executing put with key %s and value on hazelcast", key, value);
-		Object oldValue = null;
-		
-//		HCommon.printfln("obtain lock for key %s", key);
-//		cache.lock(key);
-//		try {
-//			oldValue = cache.get(key);
-//			HCommon.printfln("get old object with key %s and value %s", key, value);
-//
-//			cache.put(key, value);
-//			HCommon.printfln("put new object with key %s and value %s", key, value);
-//
-//		}
-//		finally {
-//			cache.unlock(key);
-//		}
-//		HCommon.printfln("release lock for key %s", key);
+		try {
+			log("executing put with key ", key, " and value on infinispan", value);
+			Object oldValue = null;
+			
+			TransactionManager tx = cache.getTransactionManager();
 
-		return oldValue;
+			try {
+				log("obtain lock for key ", key);
+				tx.begin();
+				cache.lock(key);
+
+				oldValue = cache.get(key);
+				log("get old object with key ", key, " and value ", key, value);
+	
+				cache.put(key, value);
+				log("put new object with key ", key, " and value ", key, value);
+				
+				tx.commit();
+			}
+			catch( Exception e ) {
+				tx.rollback();
+			}
+			
+			log("release lock for key ", key);
+			
+			return oldValue;
+		}
+		catch( Exception e ) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
