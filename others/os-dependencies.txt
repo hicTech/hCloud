@@ -1,0 +1,3 @@
+- java 1.7+
+- java 1.8 (da testare)
+- libaio.x86_64 (centos)
