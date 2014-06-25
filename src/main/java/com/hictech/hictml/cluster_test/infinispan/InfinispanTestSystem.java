@@ -18,7 +18,7 @@ public class InfinispanTestSystem implements TestSystem {
 	public static EmbeddedCacheManager infinispan() {
 		if( instance == null ) {
 			try {
-				instance = (EmbeddedCacheManager) InitialContext.doLookup("java:jboss/infinispan/container/hcache");
+				instance = (EmbeddedCacheManager) InitialContext.doLookup("java:jboss/infinispan/container/web");
 			}
 			catch( NamingException e ) {
 				e.printStackTrace();

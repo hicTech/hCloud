@@ -187,28 +187,29 @@
                   <option value="single_host">Single Host</option>
                   <option value="cluster_bigmemory">Cluster via BigMemory</option>
                   <option value="cluster_hazelcast">Cluster via Hazelcast</option>
+                  <option value="cluster_infinispan">Cluster via Infinispan</option>
                 </select>  
                 ]
                 
 				<button onclick='CLUSTER_TEST.testAllSets();'>TEST ALL SETS!</button>
 				<%
 					String single_host_root = Tester.get().fileSystem().rootPath();
-					String cluster_root = Tester.get("cluster_bigmemory").fileSystem().rootPath();
+					String cluster_root = Tester.get("cluster_infinispan").fileSystem().rootPath();
 				%>
                 <span>
-				[FileSystems Root --> Single host: <b><%= single_host_root %></b>, Cluster: <b><%= cluster_root %></b>]
+				[FileSystems Root - Single host: <b><%= single_host_root %></b>, Cluster: <b><%= cluster_root %></b>]
                 </span>
 			</div>
-			<div id="test_control">Aggiungi Client Set --> 
+			<div id="test_control">Aggiungi Client Set - 
 				Oggetti: <input id="objects_number" type="text" value="2" size="1"/>, 
 				ID iniziale: <input id="starting_object" type="text" value="1" size="1" />,
                 Memoria  (mb): <input id="size_mb" type="text" value="-1" size="1"/>,
-                Tempo (sec): <input id="time_sec" type="text" value="3" size="1"/>,
+                Tempo (sec): <input id="time_sec" type="text" value="5" size="1"/>,
                 Ritardo (min): <input id="delay_min" type="text" value="-1" size="1"/>
                 Computazione: <select id="run_mode">
                   <option value="sleep">sleep</option>
                   <option value="sqrt">sqrt</option>
-                </select> --> 
+                </select> -
 				<button onclick="CLUSTER_TEST.addTestSet();">ADD TEST SET</button> 
 			</div>
 			<!-- <div id="test_all_sets"><button onclick='CLUSTER_TEST.testAllSets();'>TEST ALL SETS!</button></div>  -->

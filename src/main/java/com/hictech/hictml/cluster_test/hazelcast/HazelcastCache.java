@@ -1,5 +1,7 @@
 package com.hictech.hictml.cluster_test.hazelcast;
 
+import static com.hictech.hictml.cluster_test.hazelcast.HazelcastTestSystem.hazelcast;
+
 import com.hazelcast.core.IMap;
 import com.hictech.hictml.cluster_test.Cache;
 import com.hictech.hictml.cluster_test.CacheSource;
@@ -10,7 +12,7 @@ public class HazelcastCache implements Cache {
 	private IMap<String, Object> cache;
 	
 	public HazelcastCache() {
-		this.cache = HazelcastTestSystem.cluster.getMap("cache");
+		this.cache = hazelcast().getMap("cache");
 	}
 	
 	public Object get(String key) {

@@ -1,5 +1,6 @@
 package com.hictech.hictml.cluster_test.infinispan;
 import static com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem.infinispan;
+
 import java.util.Date;
 
 import javax.transaction.TransactionManager;

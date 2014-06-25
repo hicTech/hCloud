@@ -3,23 +3,13 @@ package hCloud;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.LoadBalancer;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.XmlClientConfigBuilder;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.ILock;
 import com.hazelcast.core.IMap;
-import com.hazelcast.map.AbstractEntryProcessor;
-import com.hazelcast.map.EntryBackupProcessor;
-import com.hazelcast.map.EntryProcessor;
-import com.hazelcast.transaction.TransactionException;
-import com.hazelcast.transaction.TransactionalTask;
-import com.hazelcast.transaction.TransactionalTaskContext;
 import com.hictech.util.h.HCommon;
 
 public class HazelcastClientTest extends Thread {

@@ -1,19 +1,15 @@
 package com.hictech.hictml.cluster_test.bigmemory;
 
-import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import com.hictech.hictml.cluster_test.Cache;
 import com.hictech.hictml.cluster_test.CacheSource;
 import com.hictech.util.h.HCommon;
 
-import static net.sf.ehcache.CacheManager.newInstance;
-import static com.hictech.util.h.HCommon.getResource;
-
 public class BigmemoryCache implements Cache {
 
-	private static final String EHCACHE = "/ehcache.xml";
-	private static final String EHCACHE_SERVER_ARRAY = "server-array";
+//	private static final String EHCACHE = "/ehcache.xml";
+//	private static final String EHCACHE_SERVER_ARRAY = "server-array";
 
 //	private static final CacheManager manager = newInstance(getResource(BigmemoryCache.class, EHCACHE));
 

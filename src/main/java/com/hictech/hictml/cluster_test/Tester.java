@@ -7,8 +7,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hictech.hictml.cluster_test.bigmemory.BigmemoryTestSystem;
-import com.hictech.hictml.cluster_test.hazelcast.HazelcastTestSystem;
+import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.hictml.cluster_test.single_host.SingleHostTestSystem;
 import com.hictech.util.CommandUtils;
 import com.hictech.util.NestedException;
@@ -24,12 +23,14 @@ public class Tester{
 	private static Tester single_host_tester;
 	private static Tester bigmemory_tester;
 	private static Tester hazelcast_tester;
-	
+	private static Tester infinispan_tester;
+
 	public static synchronized void initSystems(){
 		if(!inited){
 			single_host_tester = new Tester(new SingleHostTestSystem());
-			bigmemory_tester = new Tester(new BigmemoryTestSystem());
-			hazelcast_tester = new Tester(new HazelcastTestSystem());
+			//bigmemory_tester = new Tester(new BigmemoryTestSystem());
+			//hazelcast_tester = new Tester(new HazelcastTestSystem());
+			infinispan_tester = new Tester(new InfinispanTestSystem());
 			inited = true;
 		}
 	}
@@ -45,6 +46,9 @@ public class Tester{
 		}
 		else if( HCommon.equals(cluster, "cluster_hazelcast") ) {
 			return hazelcast_tester;
+		}
+		else if( HCommon.equals(cluster, "cluster_infinispan") ) {
+			return infinispan_tester;
 		}
 		else {
 			throw HChecks.illegalArg("invalid cluster option %s", cluster);

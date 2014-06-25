@@ -18,6 +18,7 @@
 	</cache>
 	<!-- Add the terracottaConfig element to specify where to find the configuration 
 		specific to the server array. In this case, the configuration is retrieved 
-		from the server array itself. -->
+		from the server array itself. 
 	<terracottaConfig url="localhost:9510" />
+		-->
 </ehcache>
