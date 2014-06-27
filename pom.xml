@@ -48,15 +48,14 @@
 	
 	<dependencyManagement>
         <dependencies>
-        	<!-- 
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-tools</artifactId>
+                <artifactId>jboss-javaee-7.0-with-infinispan</artifactId>
                 <version>${version.jboss.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            -->
+        	<!-- 
              <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-7.0</artifactId>
@@ -64,6 +63,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            -->
         </dependencies>
     </dependencyManagement>
 
@@ -131,14 +131,52 @@
        	<dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
-            <version>6.0.1.Final</version>
         </dependency>
-        
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					
+					<archive>
+    					<manifestEntries>
+          					<Dependencies>org.infinispan export</Dependencies>
+        				</manifestEntries> 
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>${version.wildfly.maven.plugin}</version>
+                <configuration>
+                    <fileNames>
+                        <fileName>target/${build.finalName}.war</fileName>
+                    </fileNames>
+                    
+					<archive>
+						<manifestEntries>
+							<Dependencies>org.infinispan export</Dependencies>
+						</manifestEntries>
+					</archive>
+                </configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+				</configuration>
+			</plugin>
+			<!-- 
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
@@ -156,27 +194,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>${version.wildfly.maven.plugin}</version>
-                <configuration>
-                    <fileNames>
-                        <fileName>target/${build.finalName}.war</fileName>
-                    </fileNames>
-                </configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${version.compiler.plugin}</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
-			</plugin>
-			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -188,6 +205,7 @@
 					<jeeversion>5.0</jeeversion>
 				</configuration>
 			</plugin>
+			 -->
 		</plugins>
 	</build>
 </project>
