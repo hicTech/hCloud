@@ -18,7 +18,7 @@ public class InfinispanTestSystem implements TestSystem {
 	public static CacheContainer infinispan() {
 		if( instance == null ) {
 			try {
-				instance = (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/web");
+				instance = (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/server");
 			}
 			catch( NamingException e ) {
 				e.printStackTrace();

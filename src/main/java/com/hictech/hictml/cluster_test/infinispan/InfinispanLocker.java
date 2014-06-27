@@ -11,7 +11,7 @@ import com.hictech.hictml.cluster_test.Locker;
 
 public class InfinispanLocker implements Locker {
 
-	private static AdvancedCache<Object, Object> cache = infinispan().getCache("hcache-locks").getAdvancedCache();
+	private static AdvancedCache<Object, Object> cache = infinispan().getCache().getAdvancedCache();
 
 	private TransactionManager tx;
 
