@@ -154,7 +154,7 @@
                     
                     <archive>
                     	<manifestEntries>
-							<Dependencies>org.infinispan services</Dependencies>
+							<dependencies>org.infinispan export</dependencies>
 						</manifestEntries>
                     </archive>
                 </configuration>
