@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>cache view</title>
+		
+		<link type="text/css" rel="stylesheet" href="css/jsonview.css">
+		
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-jsonview.js"></script>
+	</head>
+
+	<body>
+		<h1>Cache entry view</h1>
+		
+		<div class="form">
+			<label>key: </label>
+			<input name="key" type="text">
+			<input type="submit">
+		</div>
+		
+		<span class="jsonview entry"></span>
+		
+		<script type="text/javascript">
+			$(':submit').on('click', function() {
+				var key = $(this).closest('.form').find('[name="key"]').val();
+	
+				$.getJSON("view-entry.jsp", {key: key}, function(data) {
+					$('.jsonview.entry').JSONView(data, {collapsed: true});
+				});
+			});
+		</script>
+		
+		<hr>
+		
+		<h1>Cache view</h1>
+	
+		<span class="jsonview all"></span>
+		
+		<script type="text/javascript">
+			$.get("view-cache.jsp", function(data) {
+				$('.jsonview.all').JSONView(data, {collapsed: true});
+			});
+		</script>
+	</body>
+</html>

@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.hictml.cluster_test.single_host.SingleHostTestSystem;
 import com.hictech.util.CommandUtils;
@@ -127,16 +124,16 @@ public class Tester{
 	
 	
 	
-	public static Map<String, Object> hostInfo() throws JSONException, IOException{
+	public static Map<String, Object> hostInfo() throws IOException{
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		CommandUtils.ProcessResult result = CommandUtils.executeCommand("hostname", CommandUtils.getBufferingListener());
-		ret.put("host_name", result.getNormalOutput().replace('\n',' '));
+		ret.put("host_name", result.getNormalOutput().replace('\n',' ').trim());
 		
 		result = CommandUtils.executeCommand("whoami", CommandUtils.getBufferingListener());
-		ret.put("user_name", result.getNormalOutput().replace('\n',' '));
+		ret.put("user_name", result.getNormalOutput().replace('\n',' ').trim());
 		
-		JSONObject ips = new JSONObject();
+		Map<String, Object> ips = new HashMap<String, Object>();
 		String[] nets = new String[]{"eth0","wlan0","eth1","wlan1","eth2","wlan2"};
 		for(String net:nets){
 			try{

@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<title>cache view</title>
+		
+		<link type="text/css" rel="stylesheet" href="css/jsonview.css">
+		
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery-jsonview.js"></script>
+	</head>
+
+<body>
+	<h1>Cache view</h1>
+
+	<span class="jsonview"></span>
+	
+	<script type="text/javascript">
+		$.get("view-cache.jsp", function(data) {
+			$('.jsonview').JSONView(data, {collapsed: true});
+		});
+	</script>
+</body>
+
+</html>
