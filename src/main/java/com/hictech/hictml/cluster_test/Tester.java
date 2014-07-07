@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hictech.datargilla.serialize.jsonsimple.JSONSimpleParser;
 import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.hictml.cluster_test.single_host.SingleHostTestSystem;
 import com.hictech.util.CommandUtils;
@@ -100,7 +101,7 @@ public class Tester{
 	
 	
 	public Map<String, Object> test(Runner runner) throws Exception{
-		HCommon.printfln("starting cache getting og object %s", runner.getObjId());
+		HCommon.printfln("starting cache getting of object %s", runner.getObjId());
 		Object cache_obj = cache.getOrLoad(runner.getObjId(), new FileCacheSource());
 		
 		TestObject obj = ((TestObject)cache_obj);
@@ -109,7 +110,15 @@ public class Tester{
 		Map<String, Object> result;
 		locker.lock(runner.getObjId());
 		{
+			System.out.println("+++++++++BEFORE TEST+++++");
+			System.out.println(HJSON.toString(InfinispanTestSystem.infinispan().getCache()));
+			System.out.println("+++++++++++++++++++++++++");
+			
 			result = obj.test(runner);
+			
+			System.out.println("+++++++++AFTER TEST++++++");
+			System.out.println(HJSON.toString(InfinispanTestSystem.infinispan().getCache()));
+			System.out.println("+++++++++++++++++++++++++");
 			writeObj(obj);
 		}
 		locker.unlock(runner.getObjId());
