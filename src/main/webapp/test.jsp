@@ -1,10 +1,11 @@
+<%@page import="com.hictech.util.h.HTree"%>
 <%@page import="com.hictech.hictml.cluster_test.Runner"%>
 <%@page import="com.hictech.util.h.HCommon"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ page import="org.json.*,com.hictech.util.*,com.hictech.hictml.cluster_test.Tester" %><%!
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@ page import="com.hictech.util.*,com.hictech.hictml.cluster_test.Tester" %><%!
 
-	public static JSONObject doJob(HttpServletRequest request) throws JSONException{
+	public static Map<?,?> doJob(HttpServletRequest request) {
 		String set_id = request.getParameter("set");
 		String obj_id = request.getParameter("object");
 		long millis = Long.parseLong(request.getParameter("millis"));
@@ -31,7 +32,7 @@
 		}
 		ms = System.currentTimeMillis()-ms;
 		
-		JSONObject ret = new JSONObject();
+		HTree ret = new HTree();
 		ret.put("set",set_id);
 		ret.put("object",obj_id);
 		ret.put("millis",runner.getMSeconds());

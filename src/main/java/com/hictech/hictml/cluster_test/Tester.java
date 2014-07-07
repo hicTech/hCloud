@@ -104,24 +104,20 @@ public class Tester{
 		HCommon.printfln("starting cache getting of object %s", runner.getObjId());
 		Object cache_obj = cache.getOrLoad(runner.getObjId(), new FileCacheSource());
 		
-		TestObject obj = ((TestObject)cache_obj);
+		TestObject obj = TestObject.wrap(cache_obj);
 		
 		HCommon.printfln("starting lock block on object %s", runner.getObjId());
 		Map<String, Object> result;
 		locker.lock(runner.getObjId());
 		{
-			System.out.println("+++++++++BEFORE TEST+++++");
-			System.out.println(HJSON.toString(InfinispanTestSystem.infinispan().getCache()));
-			System.out.println("+++++++++++++++++++++++++");
-			
 			result = obj.test(runner);
-			
-			System.out.println("+++++++++AFTER TEST++++++");
-			System.out.println(HJSON.toString(InfinispanTestSystem.infinispan().getCache()));
-			System.out.println("+++++++++++++++++++++++++");
+
 			writeObj(obj);
 		}
 		locker.unlock(runner.getObjId());
+
+		HCommon.printfln("last cache put on object %s", obj);
+		cache.put(runner.getObjId(), obj);
 		return result;
 	}
 	

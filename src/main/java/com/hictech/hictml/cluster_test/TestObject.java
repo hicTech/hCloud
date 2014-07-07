@@ -1,5 +1,7 @@
 package com.hictech.hictml.cluster_test;
 
+import static com.hictech.util.h.HCommon.str;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,9 @@ import java.util.Map;
 
 import com.hictech.util.FormatUtils;
 import com.hictech.util.NestedException;
+import com.hictech.util.h.HChecks;
 import com.hictech.util.h.HCommon;
+import com.hictech.util.h.HTree;
 import com.hictech.util.h.json.HJSON;
 
 public class TestObject extends HashMap<String, Object> implements Serializable {
@@ -21,6 +25,26 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 		super(map);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static TestObject wrap(Object object) {
+		try {
+			if( object == null ) {
+				return new TestObject(new HTree());
+			}
+			else if( object instanceof TestObject ) {
+				return (TestObject) object;
+			}
+			if( object instanceof Map ) {
+				return new TestObject((Map<String,Object>) object);
+			}
+			else {
+				throw HChecks.illegalArg("enable to wrap %s as %s", HCommon.getClass(object), HTree.class);
+			}
+		}
+		catch( Exception e ) {
+			throw new NestedException(e);
+		}
+	}
 	
 	
 	public static TestObject parse(String json){
@@ -44,7 +68,7 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 		return parse("{ \"id\": "+id+" }");
 	}
 	public static TestObject create(int id){
-		return create(""+id);
+		return create(str(id));
 	}
 	
 	
@@ -89,7 +113,7 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 		Map<String, Object> test_obj = null;
 		
 		long millis = runner.getMSeconds();
-		String obj_id = (""+this.id());
+		String obj_id = str(this.id());
 		long start_ms = System.currentTimeMillis();
 		System.out.println("Test started for object "+obj_id+" within test set: "+runner.getSetId()+" (millis: "+millis+")");
 		
@@ -103,7 +127,7 @@ public class TestObject extends HashMap<String, Object> implements Serializable 
 		
 		test_obj = new HashMap<String, Object>();
 		test_obj.put("host", host_info);
-		//test_obj.put("set", set_id);
+		test_obj.put("set", runner.getSetId());
 		test_obj.put("start", this.dateStr(start_ms));
 		test_obj.put("end", this.dateStr(end_ms));
 		

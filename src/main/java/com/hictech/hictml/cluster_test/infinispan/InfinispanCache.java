@@ -74,19 +74,15 @@ public class InfinispanCache implements Cache {
 				tx.begin();
 				cache.lock(key);
 
-				Object oldValue = cache.get(key);
+				value = cache.get(key);
 				log("get object with key ", key, " and value", key);
 				
-				if( oldValue == null ) {
+				if( value == null ) {
 					value = source.load(key);
-		
 					cache.put(key, value);
-					log("put object with key ", key, " and value %s", value);
 				}
-				else {
-					cache.replace(key, oldValue, value);
-					log("replace object with key ", key, " and value %s", value);
-				}
+				
+				log("put object with key ", key, " and value %s", value);
 				tx.commit();
 			}
 			catch( Exception e ) {
@@ -121,14 +117,7 @@ public class InfinispanCache implements Cache {
 				oldValue = cache.get(key);
 				log("get old object with key ", key, " and value ", key, value);
 	
-				if( oldValue == null ) {
-					log("called a put as create");
-					cache.put(key, value);
-				}
-				else {
-					log("called a put as update");
-					cache.replace(key, oldValue, value);
-				}
+				cache.put(key, value);
 				log("put new object with key ", key, " and value ", key, value);
 				
 				tx.commit();
