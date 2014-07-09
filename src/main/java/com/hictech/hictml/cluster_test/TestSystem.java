@@ -2,9 +2,9 @@ package com.hictech.hictml.cluster_test;
 
 public interface TestSystem{
 
-	public Cache createCache();
+	public Cache getCache();
 	
-	public FileSystem createFileSystem();
+	public FileSystem getFileSystem();
 	
-	public Locker createLocker();
+	public Locker getLocker();
 }

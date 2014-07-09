@@ -13,34 +13,28 @@ import com.hictech.hictml.cluster_test.single_host.SingleHostFileSystem;
 
 public class InfinispanTestSystem implements TestSystem {
 	
-	private static CacheContainer instance;
-	
-	public static CacheContainer infinispan() {
-		if( instance == null ) {
-			try {
-				instance = (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/server");
-			}
-			catch( NamingException e ) {
-				e.printStackTrace();
-
-				throw new RuntimeException(e);
-			}
+	private CacheContainer getCacheContainer(String name) {
+		try {
+			return (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/"+name);
 		}
-		
-		return instance;
+		catch( NamingException e ) {
+			throw new IllegalStateException(e);
+		}
 	}
 	
-	public Cache createCache() {
-		return new InfinispanCache();
+	@Override
+	public Cache getCache() {
+		return new InfinispanCache(getCacheContainer("cache").getCache());
 	}
 
-	public FileSystem createFileSystem() {
+	@Override
+	public FileSystem getFileSystem() {
 		return new SingleHostFileSystem();
 	}
 
 	@Override
-	public Locker createLocker() {
-		return new InfinispanLocker();
+	public Locker getLocker() {
+		return new InfinispanLocker(getCacheContainer("locks").getCache());
 	}
 
 }

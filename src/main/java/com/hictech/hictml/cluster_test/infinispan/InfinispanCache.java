@@ -1,6 +1,4 @@
 package com.hictech.hictml.cluster_test.infinispan;
-import static com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem.infinispan;
-
 import java.util.Date;
 
 import javax.transaction.TransactionManager;
@@ -14,8 +12,8 @@ public class InfinispanCache implements Cache {
 	
 	private AdvancedCache<Object, Object> cache;
 	
-	public InfinispanCache() {
-		this.cache = infinispan().getCache().getAdvancedCache();
+	public InfinispanCache(org.infinispan.Cache<Object, Object> cache) {
+		this.cache = cache.getAdvancedCache();
 	}
 	
 	@Deprecated

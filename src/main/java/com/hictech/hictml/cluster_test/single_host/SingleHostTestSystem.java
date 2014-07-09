@@ -7,15 +7,15 @@ import com.hictech.hictml.cluster_test.TestSystem;
 
 public class SingleHostTestSystem implements TestSystem{
 
-	public Cache createCache(){
+	public Cache getCache(){
 		return new SingleHostCache();
 	}
 	
-	public FileSystem createFileSystem(){
+	public FileSystem getFileSystem(){
 		return new SingleHostFileSystem();
 	}
 
-	public Locker createLocker() {
+	public Locker getLocker() {
 		return new SingleHostLocker();
 	}
 	

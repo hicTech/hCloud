@@ -66,9 +66,9 @@ public class Tester{
 	private Locker locker;
 	
 	public Tester(TestSystem system){
-		cache = system.createCache();
-		file_system = system.createFileSystem();
-		locker = system.createLocker();
+		cache = system.getCache();
+		file_system = system.getFileSystem();
+		locker = system.getLocker();
 	}
 	
 	public Cache cache(){

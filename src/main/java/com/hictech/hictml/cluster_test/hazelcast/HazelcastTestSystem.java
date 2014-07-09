@@ -27,16 +27,16 @@ public class HazelcastTestSystem implements TestSystem {
 		return cluster;
 	}
 	
-	public Cache createCache() {
+	public Cache getCache() {
 		return new HazelcastCache();
 	}
 
-	public FileSystem createFileSystem() {
+	public FileSystem getFileSystem() {
 		return new SingleHostFileSystem();
 	}
 
 	@Override
-	public Locker createLocker() {
+	public Locker getLocker() {
 		return new HazelcastLocker();
 	}
 	

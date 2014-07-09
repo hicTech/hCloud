@@ -9,15 +9,15 @@ import com.hictech.hictml.cluster_test.single_host.SingleHostLocker;
 
 public class BigmemoryTestSystem implements TestSystem{
 
-	public Cache createCache() {
+	public Cache getCache() {
 		return new BigmemoryCache();
 	}
 
-	public FileSystem createFileSystem() {
+	public FileSystem getFileSystem() {
 		return new SingleHostFileSystem();
 	}
 	
-	public Locker createLocker() {
+	public Locker getLocker() {
 		return new SingleHostLocker();
 	}
 

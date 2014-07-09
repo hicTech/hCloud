@@ -1,33 +1,37 @@
 package com.hictech.hictml.cluster_test.infinispan;
 
-import static com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem.infinispan;
 import static com.hictech.util.h.HCommon.printfln;
 
 import javax.transaction.TransactionManager;
 
 import org.infinispan.AdvancedCache;
+import org.infinispan.Cache;
 
 import com.hictech.hictml.cluster_test.Locker;
 
 public class InfinispanLocker implements Locker {
 
-	private static AdvancedCache<Object, Object> cache = infinispan().getCache().getAdvancedCache();
-
+	private AdvancedCache<Object, Object> cache;
 	private TransactionManager tx;
-
-	public InfinispanLocker(){
-		tx = cache.getTransactionManager();
-	}
 	
-	public synchronized void lock(String key) throws InterruptedException {
-		begin();
+	public InfinispanLocker(Cache<Object, Object> cache) {
+		this.cache = cache.getAdvancedCache();
+		
+		this.tx = this.cache.getTransactionManager();
+	}
 
+	@Override
+	public void lock(String key) throws InterruptedException {
 		printfln("obtaining infinispan lock on key %s", key);
+
+		begin();
 		cache.lock(key);
 	}
 	
+	@Override
 	public void unlock(String key) throws InterruptedException {
 		printfln("releasing infinispan lock on key %s", key);
+		
 		commit();
 	}
 	
