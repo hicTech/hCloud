@@ -13,7 +13,7 @@ import com.hictech.hictml.cluster_test.single_host.SingleHostFileSystem;
 
 public class InfinispanTestSystem implements TestSystem {
 	
-	private CacheContainer getCacheContainer(String name) {
+	public static CacheContainer getCacheContainer(String name) {
 		try {
 			return (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/"+name);
 		}

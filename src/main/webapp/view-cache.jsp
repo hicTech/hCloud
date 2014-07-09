@@ -4,4 +4,4 @@
 <%@page import="com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem"%>
 <%@page import="org.infinispan.Cache"%>
 
-<%= HJSON.toString(InfinispanTestSystem.infinispan().getCache()) %>
+<%= HJSON.toString(InfinispanTestSystem.getCacheContainer("cache").getCache()) %>

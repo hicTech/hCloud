@@ -5,7 +5,7 @@
 <%@page import="org.infinispan.Cache"%>
 
 <%
-	Cache<?,?> cache = InfinispanTestSystem.infinispan().getCache();
+	Cache<?,?> cache = InfinispanTestSystem.getCacheContainer("cache").getCache();
 	String key = request.getParameter("key");
 %>
 	
