@@ -24,6 +24,7 @@ public class InfinispanTestSystem implements TestSystem {
 	
 	@Override
 	public Cache getCache() {
+		System.out.println("*******************CACHE**************************");
 		return new InfinispanCache(getCacheContainer("cache").getCache());
 	}
 
@@ -34,6 +35,7 @@ public class InfinispanTestSystem implements TestSystem {
 
 	@Override
 	public Locker getLocker() {
+		System.out.println("*******************LOCKS**************************");
 		return new InfinispanLocker(getCacheContainer("locks").getCache());
 	}
 

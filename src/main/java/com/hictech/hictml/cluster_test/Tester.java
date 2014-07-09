@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.hictech.datargilla.serialize.jsonsimple.JSONSimpleParser;
 import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.hictml.cluster_test.single_host.SingleHostTestSystem;
 import com.hictech.util.CommandUtils;
