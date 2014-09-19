@@ -23,7 +23,7 @@
 			$(':submit').on('click', function() {
 				var key = $(this).closest('.form').find('[name="key"]').val();
 	
-				$.getJSON("view-entry.jsp", {key: key}, function(data) {
+				$.getJSON("view", {key: key}, function(data) {
 					$('.jsonview.entry').JSONView(data, {collapsed: true});
 				});
 			});
@@ -36,7 +36,7 @@
 		<span class="jsonview all"></span>
 		
 		<script type="text/javascript">
-			$.get("view-cache.jsp", function(data) {
+			$.get("view", function(data) {
 				$('.jsonview.all').JSONView(data, {collapsed: true});
 			});
 		</script>

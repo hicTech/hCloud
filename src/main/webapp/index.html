@@ -1,0 +1,247 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>HCloud: hictml test page</title>
+		
+        <meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
+        <meta name="viewport"              content="width=device-width, initial-scale=1">
+        <meta name="description"           content="The test page for HicTML">
+        <meta name="author"                content="Andrea Cardamone">
+		
+		<!-- 
+		<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+		 -->
+		
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/font-awesome-4.2.0/css/font-awesome.min.css">
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-ui-1.11.1/jquery-ui.min.css">
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/bootstrap-3.2.0/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/bootstrap-switch-3.0.2/dist/css/bootstrap3/bootstrap-switch.min.css">
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-slidemenu-0.0.1/dist/css/slidemenu.min.css">
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-jsonview-1.2.0/dist/jquery.jsonview.css">
+
+		
+		<style>
+			dd {
+				margin-left: 100px;
+			}
+			
+			td {
+				padding-top: 0px !important;
+				padding-bottom: 0px !important;
+			}
+		</style>
+		
+		<script type="text/javascript" src="scripts/vendor/lodash-2.4.1.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-ui-1.11.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/bootstrap-switch-3.0.2/dist/js/bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/rivets-0.6.9.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-slidemenu-0.0.1/dist/js/jquery.slidemenu.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-jsonview-1.2.0/dist/jquery.jsonview.js"></script>
+		
+		<script type="text/javascript" src="scripts/cluster.js"></script>
+		<script type="text/javascript" defer>
+			$(function() {
+				$('.slide-menu').slidemenu();
+				$('input[type="radio"], input[type="checkbox"]').bootstrapSwitch();
+				
+				CLUSTER_TEST.start();
+			})
+		</script>
+	</head>
+	
+	<body>
+		<div class="slide-menu">
+		    <ul class="menu-items">
+		        <li class="menu-item" data-target="#Panel1" title="Tipologia di test">
+			        <div class="menu-icon">
+		            	<i class="fa fa-book"></i>
+		            </div>
+		        	<div class="menu-content">                
+		                <span>Tipologia di test</span>
+		            </div>            
+		            <div class="menu-close">
+		            	<i class="fa fa-times"></i>
+		            </div>
+		        </li>
+		        <li id="CalendarIcon" class="menu-item" data-target="#Panel2" title="Opzioni">
+		        	<div class="menu-icon">
+		            	<i class="fa fa-calendar"></i>
+		            </div>
+		        	<div class="menu-content">                
+		                <span>Opzioni test</span>
+		            </div>
+		            <div class="menu-close">
+		            	<i class="fa fa-times"></i>
+		            </div>
+		        </li>
+		        <li id="ShoppingIcon" class="menu-item" data-target="#Panel3" title="Panel 3">
+		        	<div class="menu-icon">
+		            	<i class="fa fa-folder-open"></i>
+		            </div>
+		        	<div class="menu-content">                
+		                <span>Panel 3</span>
+		            </div>
+		            <div class="menu-close">
+		            	<i class="fa fa-times"></i>
+		            </div>
+		        </li>
+		        <li id="SearchIcon" class="menu-item" data-target="#Panel4" title="Panel 4">
+		        	<div class="menu-icon">
+		            	<i class="fa fa-search"></i>
+		            </div>
+		        	<div class="menu-content">                
+		                <span>Panel 4</span>
+		            </div>
+		            <div class="menu-close">
+		            	<i class="fa fa-times"></i>
+		            </div>
+		        </li>
+		        <li id="BugIcon" class="menu-item" data-target="#Panel5" title="Tipologia di test">
+		        	<div class="menu-icon">
+		            	<i class="fa fa-bug"></i>
+		            </div>
+		            <div class="menu-content">                
+		                <span>Panel 5</span>
+		            </div>
+		            <div class="menu-close">
+		            	<i class="fa fa-times"></i>
+		            </div>
+		        </li>
+		    </ul>
+		    <div class="menu-panels">
+		        <div id="Panel1" class="menu-panel">
+		        	<dl>
+			        	<dt>Single host</dt>
+			        	<dd>
+							<input type="radio" name="cluster_mode" value="single_host" checked>
+						</dd>
+					
+						<dt>Bigmemory</dt>
+						<dd>
+							<input type="radio" name="cluster_mode" value="cluster_bigmemory">
+						</dd>
+					
+						<dt>Hazelcast</dt>
+						<dd>
+							<input type="radio" name="cluster_mode" value="cluster_hazelcast">
+						</dd>
+					
+						<dt>Infinispan</dt>
+						<dd>
+							<input type="radio" name="cluster_mode" value="cluster_infinispan">
+						</dd>
+		        	</dl>
+				</div>
+				
+		        <div id="Panel2" class="menu-panel">
+		        	<dl>
+						<dt>N° di oggetti</dt>
+			            <dd>
+							<input id="objects_number" type="text" size="3" value="2">
+						</dd>
+			
+						<dt>ID iniziale</dt>
+						<dd>
+							<input id="starting_object" type="text" size="3" value="1">
+						</dd>
+			
+						<dt>Memoria (MB)</dt>
+						<dd>
+							<input id="size_mb" type="text" size="3" value="-1">
+						</dd>
+			
+						<dt>Tempo (sec)</dt>
+						<dd>
+							<input id="time_sec" type="text" size="3" value="-1">
+						</dd>
+			
+						<dt>Ritardo minimo (sec)</dt>
+						<dd>
+							<input id="delay_min" type="text" size="3" value="0">
+						</dd>
+		
+						<dt>Computazione</dt>
+						<dd>
+							<select id="run_mode">
+								<option value="sleep">cpu sleep</option>
+								<option value="sqrt">cpu sqrt</option>
+							</select>
+						</dd>
+					</dl>
+					
+					<hr>
+					
+					<button onclick="CLUSTER_TEST.addTestSet();" class="btn btn-link">ADD TEST SET</button> 
+					
+		        </div>
+		        <div id="Panel3" class="menu-panel">
+		            
+		        </div>
+		        <div id="Panel4" class="menu-panel">
+		           
+		        </div>
+		        <div id="Panel5" class="menu-panel">
+		            
+		        </div>
+		    </div>
+		</div>
+	    <div class="render">
+	    	
+	   	</div>
+	   	
+	   	<template id="test-list">
+			<table class="table table-condensed table-hover">
+				<caption>
+					<h1>Lista dei test</h1>
+					
+					<span>filesystems: </span>
+					<span class="text-success" rv-text="info.fs.single"></span>
+					<button class="btn btn-link" onclick="CLUSTER_TEST.doTestAll(event)">run all</button>
+				</caption>
+				
+		   		<thead>
+		   			<th style="width: 25em">Test</th>
+		   			<th style="width: 1em">ID</th>
+		   			<th style="width: 1em">Mem</th>
+		   			<th style="width: 1em">Time</th>
+		   			<th style="width: 1em">Delay</th>
+		   			<th>Stato</th>
+		   			<th></th>
+		   		</thead>
+		   		
+		   		<tbody rv-each-tests="model.tests" rv-data-set_id="tests.set_id">
+		   			<tr rv-data-obj_id="tests.obj_id">
+		   				<td>
+		   					<span>cluster: </span>
+			   				<span class="text-success" rv-text="tests.cluster_mode"></span>
+			   				
+		   					<span>mode: </span>
+		   					<span class="text-success" rv-text="tests.run_mode"></span>
+		   					
+		   					<span>id: </span>
+		   					<span class="text-success" rv-text="tests.set_id"></span>
+	   					</td>
+	   					
+		   				<td rv-text="tests.obj_id"></td>
+		   				<td rv-text="tests.size_mb"></td>
+		   				<td rv-text="tests.time_sec"></td>
+		   				<td rv-text="tests.delay_min"></td>
+		   				<td>
+		   					<div data-state></div>
+		   					<div data-result style="display: none;"></div>
+		   				</td>
+		   				<td>
+		   					<a href="javascript:;" data-run class="btn btn-link" onclick="CLUSTER_TEST.doTestObj(event)">run object</a>
+	   						<a href="javascript:;" onclick="CLUSTER_TEST.doTestSet(event)">run test</a>
+		   				</td>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+	   	</template>
+	</body>
+</html>
+
+		
