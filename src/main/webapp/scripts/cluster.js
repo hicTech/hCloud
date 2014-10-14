@@ -1,4 +1,5 @@
 var CLUSTER_TEST = {
+	version: '1.0',
 	info: {},
 	tests: [],
 	
@@ -65,7 +66,7 @@ var CLUSTER_TEST = {
 			this.tests_tree[set_id][values.obj_id] = values;
 		}
 		
-		this.render('#test-list', {tests: this.tests});
+		//this.render('#test-list', {tests: this.tests});
 	},
 	
 	doTestAll: function(event) {
