@@ -146,7 +146,7 @@
 					
 					<hr>
 					
-					<button class="btn btn-link" ng-click="cluster.addTest($event)">ADD TEST SET</button> 
+					<button class="btn btn-link" ng-click="cluster.addTestSet($event)">ADD TEST SET</button> 
 					
 		        </div>
 		        <div id="Panel3" class="menu-panel">
@@ -179,7 +179,8 @@
     		   			<th style="width: 1em">Time</th>
     		   			<th style="width: 1em">Delay</th>
     		   			<th>Stato</th>
-    		   			<th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
 		   		</thead>
 		   		
@@ -205,8 +206,10 @@
 		   					<div data-result style="display: none;"></div>
 		   				</td>
 		   				<td>
-		   					<a href="javascript:;" data-run class="btn btn-link" ng-click="cluster.doTestObj($event)">run object</a>
-	   						<a href="javascript:;" ng-click="cluster.doTestSet(event)">run test</a>
+                            <a href="javascript:;" data-run class="btn btn-link" ng-click="cluster.doTestObj($event)">run object</a>
+                        </td>
+                        <td>
+	   						<a href="javascript:;" ng-click="cluster.doTestSet($event)">run test</a>
 		   				</td>
 		   			</tr>
 		   		</tbody>

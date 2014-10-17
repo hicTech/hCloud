@@ -40,7 +40,7 @@ var CLUSTER_TEST = {
 	},
 	
 
-	addTestSet: function(){
+	addTestSet: function() {
 		var objects_number = this.jsInt("#objects_number");
 		var starting_object = this.jsInt("#starting_object");
 
@@ -70,25 +70,26 @@ var CLUSTER_TEST = {
 	},
 	
 	doTestAll: function(event) {
-		$('[data-run]').trigger('click')
+		$('[data-run]').trigger('click');
 	},
 	
 	doTestSet: function(event) {
 		var $elem = $(event.target);
 		var set_id = $elem.closest('[data-set_id]').data('set_id');
 		
-		$('[data-set_id='+set_id+']').each(function(i, e) {
-			$('[data-run]', this).trigger('click')
-		});
+		
+		$('[data-set_id='+set_id+'] [data-run]').each($.proxy(function(i, e) {
+			this.doTestObj($(e));
+		}, this));
 	},
 	
-	doTestObj: function(event) {
-		var $elem = $(event.target);
+	doTestObj: function(eventOrDom) {
+		var $elem = !!eventOrDom.target? $(eventOrDom.target) : eventOrDom;
 		
 		var set_id = $elem.closest('[data-set_id]').data('set_id');
 		var obj_id = $elem.closest('[data-obj_id]').data('obj_id');
 		var values = this.tests_tree[set_id][obj_id];
-		
+
 		var delay = values.delay_min;
 		if( delay > 0 ) {
 			$('[data-state]', $elem.closest('[data-obj_id]')).html('SLEEPING');
@@ -96,7 +97,6 @@ var CLUSTER_TEST = {
 
 		var url = "test";
 		setTimeout(function() {
-
 			$.ajax(url, {
 				data: {
 					set: set_id,
