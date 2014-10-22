@@ -1,0 +1,59 @@
+<div ng-app="hcloud" ng-controller="hcloud" class="container-fluid">
+	<div>
+		<h1>Lista dei test</h1>
+
+		<div class="text-center">
+			<span>filesystems: </span> <span class="text-success">{{info.fs.single}}</span>
+			<button class="btn btn-link" ng-click="doTestAll()">run all</button>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5">Test</div>
+			<div class="col-md-1">ID</div>
+			<div class="col-md-1">Mem</div>
+			<div class="col-md-1">Time</div>
+			<div class="col-md-1">Delay</div>
+			<div class="col-md-1">Stato</div>
+			<div class="col-md-2"></div>
+		</div>
+
+		<div class="panel panel-default" data-set_id="{{set_id}}" ng-repeat="(set_id, set) in tests">
+			<div class="panel-heading ">
+				<div class="row">
+					<div class="col-md-5">
+						<span>cluster: </span> <span class="text-success">{{set[0].cluster_mode}}</span>
+	
+						<span>mode: </span> <span class="text-success">{{set[0].run_mode}}</span>
+	
+						<span>id: </span> <span class="text-success">{{set[0].set_id}}</span>
+					</div>
+	
+					<div class="col-md-1">{{set[0].obj_id}}</div>
+					<div class="col-md-1">{{set[0].size_mb}}</div>
+					<div class="col-md-1">{{set[0].time_sec}}</div>
+					<div class="col-md-1">{{set[0].delay_min}}</div>
+					<div class="col-md-1">
+						<div data-state ng-click="doResult($event)"></div>
+					</div>
+					<div class="col-md-2">
+						<a href="javascript:;" ng-click="doTestSet($event)">run test</a>
+					</div>
+					<div class="col-md-12"></div>
+				</div>
+			</div>
+			
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-2" data-obj_id="{{set[0].obj_id}}"
+						ng-repeat="test in set">
+						<div>
+							[<span data-state ng-click="doTest($event)">NONE</span>]<span
+								ng-click="doResult($event)">+</span>
+						</div>
+						<div data-result style="display: none;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
