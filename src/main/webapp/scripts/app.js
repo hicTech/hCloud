@@ -43,7 +43,7 @@ angular
 		
 		cluster.add($scope.options);
 		
-		$rootScope.$broadcast('mosconi');
+		$rootScope.$broadcast('update');
 	};
 })
 .controller('hcloud', function($scope, $rootScope, $resource, $timeout, cluster) {
@@ -72,10 +72,10 @@ angular
 		});
 	
 		var complete = promises[1];
-		complete.done(function(data, status) {
+		complete.done(function(data) {
 			$result.JSONView(data, {collapsed: true});
 			
-			$state.html(status.toUpperCase());
+			$state.html(!data.error? 'SUCCESS' : 'FAIL');
 		});
 	};
 	
@@ -100,7 +100,7 @@ angular
 		$(event.target).closest('[data-obj_id]').find('[data-result]').toggle();
 	};
 	
-	$scope.$on('mosconi', function() {
+	$scope.$on('update', function() {
 		$scope.tests = cluster.tests;
 	});
 });

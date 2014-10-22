@@ -9,11 +9,7 @@
         <meta name="description"           content="The test page for HicTML">
         <meta name="author"                content="Andrea Cardamone">
 		
-		<!-- 
-		<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-		 -->
-		
-		<link type="text/css" rel="stylesheet" href="scripts/vendor/font-awesome-4.2.0/css/font-awesome.min.css">
+ 		<link type="text/css" rel="stylesheet" href="scripts/vendor/font-awesome-4.2.0/css/font-awesome.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-ui-1.11.1/jquery-ui.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/bootstrap-3.2.0/css/bootstrap.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-slidemenu-0.0.1/dist/css/slidemenu.min.css">
@@ -29,120 +25,12 @@
         <script type="text/javascript" src="scripts/vendor/angular-1.3.0/angular-resource.min.js"></script>
 		
         <script type="text/javascript" src="scripts/cluster.js"></script>
-		<script type="text/javascript" defer>
-			$(function() {
-				$('.slide-menu').slidemenu();
-			})
-		</script>
-        
         <script type="text/javascript" src="scripts/app.js"></script>
         
 	</head>
 	
 	<body>
-		<div class="slide-menu" ng-controller="menu">
-		    <ul class="menu-items">
-		        <li class="menu-item" data-target="#Panel1" title="Tipologia di test">
-			        <div class="menu-icon">
-		            	<i class="fa fa-book"></i>
-		            </div>
-		        	<div class="menu-content">                
-		                <span>Tipologia di test</span>
-		            </div>            
-		            <div class="menu-close">
-		            	<i class="fa fa-times"></i>
-		            </div>
-		        </li>
-		        <li id="CalendarIcon" class="menu-item" data-target="#Panel2" title="Opzioni">
-		        	<div class="menu-icon">
-		            	<i class="fa fa-calendar"></i>
-		            </div>
-		        	<div class="menu-content">                
-		                <span>Opzioni test</span>
-		            </div>
-		            <div class="menu-close">
-		            	<i class="fa fa-times"></i>
-		            </div>
-		        </li>
-		    </ul>
-		    <div class="menu-panels">
-		        <div id="Panel1" class="menu-panel">
-		        	<dl>
-			        	<dt>Single host</dt>
-			        	<dd>
-							<input type="radio" name="cluster_mode" checked ng-value="single_host" ng-model="options.cluster_mode">
-						</dd>
-					
-						<dt>Bigmemory</dt>
-						<dd>
-							<input type="radio" name="cluster_mode" ng-value="cluster_bigmemory" ng-model="options.cluster_mode">
-						</dd>
-					
-						<dt>Hazelcast</dt>
-						<dd>
-							<input type="radio" name="cluster_mode" ng-value="cluster_hazelcast" ng-model="options.cluster_mode">
-						</dd>
-					
-						<dt>Infinispan</dt>
-						<dd>
-							<input type="radio" name="cluster_mode" ng-value="cluster_infinispan" ng-model="options.cluster_mode">
-						</dd>
-		        	</dl>
-				</div>
-				
-		        <div id="Panel2" class="menu-panel">
-		        	<dl>
-						<dt>N° di oggetti</dt>
-			            <dd>
-							<input id="objects_number" type="number" size="3" value="2" ng-model="options.objects_number">
-						</dd>
-			
-						<dt>ID iniziale</dt>
-						<dd>
-							<input id="starting_object" type="number" size="3" value="1" ng-model="options.starting_object">
-						</dd>
-			
-						<dt>Memoria (MB)</dt>
-						<dd>
-							<input id="size_mb" type="number" size="3" ng-value="-1" ng-model="options.size_mb">
-						</dd>
-			
-						<dt>Tempo (sec)</dt>
-						<dd>
-							<input id="time_sec" type="number" size="3" value="-1" ng-model="options.time_sec">
-						</dd>
-			
-						<dt>Ritardo minimo (sec)</dt>
-						<dd>
-							<input id="delay_min" type="number" size="3" value="0" ng-model="options.delay_min">
-						</dd>
-		
-						<dt>Computazione</dt>
-						<dd>
-							<select id="run_mode" ng-model="options.run_mode">
-								<option value="sleep">cpu sleep</option>
-								<option value="sqrt">cpu sqrt</option>
-							</select>
-						</dd>
-					</dl>
-					
-					<hr>
-					
-					<button class="btn btn-link" ng-click="newTest()">ADD TEST SET</button> 
-					
-		        </div>
-		        <div id="Panel3" class="menu-panel">
-		            
-		        </div>
-		        <div id="Panel4" class="menu-panel">
-		           
-		        </div>
-		        <div id="Panel5" class="menu-panel">
-		            
-		        </div>
-		    </div>
-		</div>
-        
+		<div ng-include="'pages/menu.html'"></div>
         
         <div ng-controller="hcloud" class="container-fluid">
             <div>
