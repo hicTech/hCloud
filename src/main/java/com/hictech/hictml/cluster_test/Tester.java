@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.hictml.cluster_test.single_host.SingleHostTestSystem;
 import com.hictech.util.CommandUtils;
 import com.hictech.util.NestedException;
@@ -26,7 +27,7 @@ public class Tester{
 			single_host_tester = new Tester(new SingleHostTestSystem());
 			//bigmemory_tester = new Tester(new BigmemoryTestSystem());
 			//hazelcast_tester = new Tester(new HazelcastTestSystem());
-			//infinispan_tester = new Tester(new InfinispanTestSystem());
+			infinispan_tester = new Tester(new InfinispanTestSystem());
 			inited = true;
 		}
 	}
