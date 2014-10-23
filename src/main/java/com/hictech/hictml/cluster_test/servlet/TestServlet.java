@@ -70,9 +70,7 @@ public class TestServlet extends HttpServlet {
 		HTree ret = new HTree();
 		ret.put("set", set_id);
 		ret.put("object", obj_id);
-		ret.put("millis", runner.getMSeconds());
-		ret.put("mbytes", runner.getMBytes());
-		ret.put("cycles", runner.getCycles());
+		ret.put("millis", ms);
 		ret.putNotNull("result", result);
 		ret.putNotNull("error", error);
 		

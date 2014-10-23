@@ -1,12 +1,17 @@
 <div ng-app="hcloud" ng-controller="hcloud" class="container-fluid">
 	<div>
-		<h1>Lista dei test</h1>
-
-		<div class="text-center">
-			<span>filesystems: </span> <span class="text-success">{{info.fs.single}}</span>
-			<button class="btn btn-link" ng-click="doTestAll()">run all</button>
+		<div class="page-header">
+			<h1>
+				<span>HTML+</span>
+				<small>the cache page test</small>
+			</h1>
 		</div>
 
+		<div class="text-center">
+			<button class="btn btn-default" ng-click="doTestAll()">run all</button>
+			<span>filesystems: </span><span class="text-success">{{info.fs.single}}</span>
+		</div>
+		
 		<div class="row">
 			<div class="col-md-5">Test</div>
 			<div class="col-md-1">ID</div>
@@ -46,11 +51,21 @@
 				<div class="row">
 					<div class="col-md-2" data-obj_id="{{test.obj_id}}" ng-repeat="test in set">
 						<div>
-							[<span data-state ng-click="doTest($event)">NONE</span>]
-							<span ng-switch on="!results[set_id+test.obj_id]">
-								<span class="glyphicon glyphicon-eye-open" ng-switch-when="true" ng-click="doResult($event); results[set_id+test.obj_id] = !results[set_id+test.obj_id];"></span>
-								<span class="glyphicon glyphicon-eye-close" ng-switch-when="false" ng-click="doResult($event); results[set_id+test.obj_id] = !results[set_id+test.obj_id];"></span>
+							<span ng-switch on="!results[set_id+test.obj_id].show">
+								<span class="glyphicon glyphicon-eye-open" ng-switch-when="true" ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>
+								<span class="glyphicon glyphicon-eye-close" ng-switch-when="false" ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>
 							</span>
+							
+							<span ng-switch on="results[set_id+test.obj_id].status" ng-click="doTest($event)">
+								<span class="label label-default" ng-switch-default>NONE</span>
+								<span class="label label-info" ng-switch-when="SLEEPING">{{results[set_id+test.obj_id].status}}</span>
+								<span class="label label-warning" ng-switch-when="WAITING">{{results[set_id+test.obj_id].status}}</span>
+								<span class="label label-success" ng-switch-when="SUCCESS">{{results[set_id+test.obj_id].status}}</span>
+								<span class="label label-danger" ng-switch-when="FAIL">{{results[set_id+test.obj_id].status}}</span>
+							</span>
+							
+							<em ng-click="doTest($event)">{{results[set_id+test.obj_id].result.host.host_name}}</em>
+							
 						</div>
 						<div data-result style="display: none;"></div>
 					</div>

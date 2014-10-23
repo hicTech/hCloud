@@ -60,23 +60,29 @@ angular
 		var $el = $(el);
 		var $obj_id = $el.closest('[data-obj_id]');
 		var $set_id = $obj_id.closest('[data-set_id]');
-		var $state = $obj_id.find('[data-state]').html('SLEEPING');
 		var $result = $obj_id.find('[data-result]').empty();
 		
 		var obj_id = $obj_id.data('obj_id');
 		var set_id = $set_id.data('set_id');
 		var promises = cluster.run(set_id, obj_id);
 
+		$scope.results[set_id+obj_id] = $scope.results[set_id+obj_id] || {};
+		$scope.results[set_id+obj_id].status = 'SLEEPING';
+		
 		var waiting = promises[0];
 		waiting.done(function() {
-			$state.html('WAITING');
+			$scope.results[set_id+obj_id].status = 'WAITING';
+			$scope.$apply();
 		});
 	
 		var complete = promises[1];
 		complete.done(function(data) {
 			$result.JSONView(data, {collapsed: true});
 			
-			$state.html(!data.error? 'SUCCESS' : 'FAIL');
+			var status = !data.error? 'SUCCESS' : 'FAIL';
+			$scope.results[set_id+obj_id].status = status;
+			$scope.results[set_id+obj_id].result = data.result;
+			$scope.$apply();
 		});
 	};
 	
