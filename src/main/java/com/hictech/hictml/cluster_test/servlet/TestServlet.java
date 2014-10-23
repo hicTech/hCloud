@@ -73,10 +73,8 @@ public class TestServlet extends HttpServlet {
 		ret.put("millis", runner.getMSeconds());
 		ret.put("mbytes", runner.getMBytes());
 		ret.put("cycles", runner.getCycles());
-		if (result != null)
-			ret.put("result", result);
-		if (error != null)
-			ret.put("error", error);
+		ret.putNotNull("result", result);
+		ret.putNotNull("error", error);
 		
 		response.getWriter().write(HJSON.toString(ret));
 

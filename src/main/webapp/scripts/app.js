@@ -50,6 +50,7 @@ angular
 	$scope.title = "HCloud Test Page";
 	$scope.info = cluster.info;
 	$scope.tests = cluster.tests;
+	$scope.results = {mosconi0: false};
 	
 	$scope.doTest = function(event) {
 		$scope.doTestObj(event.target);
