@@ -11,10 +11,9 @@
 		
  		<link type="text/css" rel="stylesheet" href="scripts/vendor/font-awesome-4.2.0/css/font-awesome.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-ui-1.11.1/jquery-ui.min.css">
-		<link type="text/css" rel="stylesheet" href="scripts/vendor/bootstrap-3.2.0/css/bootstrap.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-slidemenu-0.0.1/dist/css/slidemenu.min.css">
 		<link type="text/css" rel="stylesheet" href="scripts/vendor/jquery-jsonview-1.2.0/dist/jquery.jsonview.css">
-
+		<link type="text/css" rel="stylesheet" href="scripts/vendor/bootstrap-3.2.0/css/bootstrap.min.css">
 		
 		<script type="text/javascript" src="scripts/vendor/lodash-2.4.1/lodash-2.4.1.min.js"></script>
 		<script type="text/javascript" src="scripts/vendor/jquery-2.1.1/jquery-2.1.1.min.js"></script>
@@ -29,9 +28,11 @@
         
 	</head>
 	
-	<body>
-		<div ng-include="'pages/menu.html'"></div>
-		<div ng-include="'pages/main.html'"></div>
+	<body style="padding-right: 50px;">
+		<div id="header" ng-include="'pages/header.html'"></div>
+        <div id="menu"   ng-include="'pages/menu.html'"></div>
+		<div id="cache"  ng-include="'pages/main.html'"></div>
+		<div id="view"   ng-include="'pages/view.html'" style="display: none;"></div>
 	</body>
 </html>
 

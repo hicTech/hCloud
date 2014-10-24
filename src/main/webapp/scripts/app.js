@@ -1,5 +1,6 @@
 angular
 .module('hcloud', ['ngResource'])
+
 .factory('random', function() {
 	return function(n) {
 	    var text = "";
@@ -11,6 +12,7 @@ angular
 	    return text;
 	}
 })
+
 .factory('cluster', function($resource) {
 	var instance = window.CLUSTER_TEST;
 	
@@ -25,6 +27,7 @@ angular
 		}
 	}
 })
+
 .controller('menu', function($scope, $rootScope, $resource, random, cluster) {
 	$scope.info = cluster.info;
 	
@@ -45,7 +48,27 @@ angular
 		
 		$rootScope.$broadcast('update');
 	};
+	
+	$scope.viewTestPage = function() {
+		$('#cache').hide();
+		$('#view').show();
+	};
+	
+	$scope.viewCachePage = function() {
+		$('#cache').show();
+		$('#view').hide();
+	};
 })
+
+.controller('view', function($scope, $rootScope, $resource, $interval, cluster) {
+	$interval(function() {
+		var data = $resource('view').get(function() {
+			$('.jsonview .all').JSONView(data, {collapsed: true});
+		});
+		
+	}, 1000);
+})
+
 .controller('hcloud', function($scope, $rootScope, $resource, $timeout, cluster) {
 	$scope.title = "HCloud Test Page";
 	$scope.info = cluster.info;

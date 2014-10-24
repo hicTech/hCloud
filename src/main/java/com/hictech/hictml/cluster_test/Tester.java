@@ -38,13 +38,13 @@ public class Tester{
 		if( HCommon.equals(cluster, "single_host") ) {
 			return single_host_tester;
 		}
-		else if( HCommon.equals(cluster, "cluster_bigmemory") ) {
+		else if( HCommon.equals(cluster, "bigmemory") ) {
 			return bigmemory_tester;
 		}
-		else if( HCommon.equals(cluster, "cluster_hazelcast") ) {
+		else if( HCommon.equals(cluster, "hazelcast") ) {
 			return hazelcast_tester;
 		}
-		else if( HCommon.equals(cluster, "cluster_infinispan") ) {
+		else if( HCommon.equals(cluster, "infinispan") ) {
 			return infinispan_tester;
 		}
 		else {

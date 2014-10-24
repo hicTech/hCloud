@@ -1,79 +1,88 @@
-<div class="slide-menu" ng-app="hcloud" ng-controller="menu">
+<style>
+    .menu dl,
+    .menu ul {
+        margin-top: 1em;
+    }
+    
+    .menu dt,
+    .menu dd {
+        height: 40px;
+    }
+    .menu dt {
+        width: 120px;
+    }
+    
+    .menu dt > *{
+        vertical-align: bottom !important;
+    }
+    
+    .menu dd {
+        margin-left: 130px;
+    }
+    
+    .menu input[type="number"] {
+       width:50px;
+    }
+</style>
+
+<div class="menu slide-menu" ng-app="hcloud" ng-controller="menu">
     <ul class="menu-items">
-        <li class="menu-item" data-target="#Panel1" title="Tipologia di test">
-	        <div class="menu-icon">
-            	<i class="fa fa-book"></i>
-            </div>
-        	<div class="menu-content">                
-                <span>Tipologia di test</span>
-            </div>            
-            <div class="menu-close">
-            	<i class="fa fa-times"></i>
-            </div>
+        <li class="menu-item" data-target="#panel1" title="Tipologia di test">
+	        <div class="menu-icon"><i class="glyphicon glyphicon-cog"></i></div>
+        	<div class="menu-content"><span>Tipologia di test</span></div>            
         </li>
-        <li id="CalendarIcon" class="menu-item" data-target="#Panel2" title="Opzioni">
-        	<div class="menu-icon">
-            	<i class="fa fa-calendar"></i>
-            </div>
-        	<div class="menu-content">                
-                <span>Opzioni test</span>
-            </div>
-            <div class="menu-close">
-            	<i class="fa fa-times"></i>
-            </div>
+        
+        <li id="CalendarIcon" class="menu-item" data-target="#panel2" title="Opzioni">
+            <div class="menu-icon"><i class="glyphicon glyphicon-wrench"></i></div>
+            <div class="menu-content">Opzioni test</div>
+        </li>
+        
+        <li id="CalendarIcon" class="menu-item" data-target="#panel3" title="Opzioni">
+            <div class="menu-icon"><i class="glyphicon glyphicon-flag"></i></div>
+            <div class="menu-content">Visualizza</div>
         </li>
     </ul>
     <div class="menu-panels">
-        <div id="Panel1" class="menu-panel">
-        	<dl class="dl-horizontal">
-	        	<dt>Single host</dt>
-	        	<dd>
-					<input type="radio" name="cluster_mode" ng-value="'single_host'"        ng-model="options.cluster_mode">
-				</dd>
-			
-				<dt>Bigmemory</dt>
-				<dd>
-					<input type="radio" name="cluster_mode" ng-value="'cluster_bigmemory'"  ng-model="options.cluster_mode">
-				</dd>
-			
-				<dt>Hazelcast</dt>
-				<dd>
-					<input type="radio" name="cluster_mode" ng-value="'cluster_hazelcast'"  ng-model="options.cluster_mode">
-				</dd>
-			
-				<dt>Infinispan</dt>
-				<dd>
-					<input type="radio" name="cluster_mode" ng-value="'cluster_infinispan'" ng-model="options.cluster_mode">
-				</dd>
-        	</dl>
+        <div id="panel1" class="menu-panel">
+        	<ul class="list-group">
+                <li class="list-group-item">
+                    <label for="cluster_mode_single_host">Single host</label>
+                    <input id="cluster_mode_single_host" type="radio" name="cluster_mode" ng-value="'single_host'" ng-model="options.cluster_mode">
+                </li>
+                
+                <li class="list-group-item">
+                    <label for="cluster_mode_bigmemory">Bigmemory</label>
+                    <input id="cluster_mode_bigmemory"   type="radio" name="cluster_mode" ng-value="'bigmemory'"   ng-model="options.cluster_mode">
+                </li>
+                
+                <li class="list-group-item">
+                    <label for="cluster_mode_hazelcast">Hazelcast</label>
+                    <input id="cluster_mode_hazelcast"   type="radio" name="cluster_mode" ng-value="'hazelcast'"   ng-model="options.cluster_mode">
+                </li>
+                
+                <li class="list-group-item">
+                    <label for="cluster_mode_infinispan">Infinispan</label>
+                    <input id="cluster_mode_infinispan" type="radio" name="cluster_mode"  ng-value="'infinispan'"  ng-model="options.cluster_mode">
+                </li>
+        	</ul>
 		</div>
 		
-        <div id="Panel2" class="menu-panel">
-        	<dl>
+        <div id="panel2" class="menu-panel">
+        	<dl class="dl-horizontal">
 				<dt>N° di oggetti</dt>
-	            <dd>
-					<input id="objects_number" type="number" size="3" value="2" ng-model="options.objects_number">
-				</dd>
+	            <dd><input id="objects_number"  type="number" value="2"  ng-model="options.objects_number"></dd>
 	
 				<dt>ID iniziale</dt>
-				<dd>
-					<input id="starting_object" type="number" size="3" value="1" ng-model="options.starting_object">
-				</dd>
+				<dd><input id="starting_object" type="number" value="1"  ng-model="options.starting_object"></dd>
 	
 				<dt>Memoria (MB)</dt>
-				<dd>
-					<input id="size_mb" type="number" size="3" value="-1" ng-model="options.size_mb">
-				</dd>
+				<dd><input id="size_mb"         type="number" value="-1" ng-model="options.size_mb"></dd>
 	
 				<dt>Tempo (sec)</dt>
-				<dd>
-					<input id="time_sec" type="number" size="3" value="-1" ng-model="options.time_sec">
-				</dd>
+				<dd><input id="time_sec"        type="number" value="-1" ng-model="options.time_sec"></dd>
 	
-				<dt>Ritardo minimo (sec)</dt>
-				<dd>
-					<input id="delay_min" type="number" size="3" value="0" ng-model="options.delay_min">
-				</dd>
+				<dt>Ritardo (sec)</dt>
+				<dd><input id="delay_min"       type="number" value="0"  ng-model="options.delay_min"></dd>
 
 				<dt>Computazione</dt>
 				<dd>
@@ -84,14 +93,24 @@
 				</dd>
 			</dl>
 			
-			<hr>
-			
 			<button class="btn btn-primary" ng-click="newTest()">ADD TEST SET</button> 
-			
+        </div>
+        
+         <div id="panel3" class="menu-panel">
+            <ul class="list-group">
+                <li class="list-group-item" ng-click="viewCachePage()">
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                    <a href="javascript:;" class="btn">Visualizza test</a>
+                </li>
+                
+                <li class="list-group-item" ng-click="viewTestPage()">
+                    <i class="glyphicon glyphicon-arrow-right"></i>
+                    <a href="javascript:;" class="btn">Visualizza cache</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
 
 <script type="text/javascript">
 	$('.slide-menu').slidemenu();

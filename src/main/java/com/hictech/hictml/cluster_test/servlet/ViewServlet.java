@@ -34,10 +34,10 @@ public class ViewServlet extends HttpServlet {
 		 
 		Cache<Object, Object> cache = InfinispanTestSystem.getCacheContainer("cache").getCache();
 		if( key == null || key.length() == 0 ) {
-			result = HJSON.toString(cache.get(key));
+			result = HJSON.toString(cache);
 		}
 		else {
-			result = HJSON.toString(cache);
+			result = HJSON.toString(cache.get(key));
 		}
 		
 		response.getWriter().write(result);
