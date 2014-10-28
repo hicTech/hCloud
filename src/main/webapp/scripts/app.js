@@ -60,13 +60,21 @@ angular
 	};
 })
 
-.controller('view', function($scope, $rootScope, $resource, $interval, cluster) {
-	$interval(function() {
-		var data = $resource('view').get(function() {
-			$('.jsonview .all').JSONView(data, {collapsed: true});
+.controller('view', function($scope, $rootScope, $interval, cluster) {
+	$scope.refresh = function() {
+		$.getJSON('view', function(data) {
+			$('.jsonview.all').JSONView(data, {collapsed: true});
 		});
-		
-	}, 1000);
+	};
+
+	
+	$scope.query = function(key) {
+		$.getJSON('view', {key: key}, function(data) {
+			$('.jsonview.entry').JSONView(data, {collapsed: true});
+		});
+	};
+
+	$scope.refresh();
 })
 
 .controller('hcloud', function($scope, $rootScope, $resource, $timeout, cluster) {

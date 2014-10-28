@@ -3,46 +3,15 @@
     
     <hr>
 	
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Clustered cache</div>
-                <div class="panel-body">
-                    <span class="jsonview all">-</span>
-                </div>
-            </div>
-            
-            <script type="text/javascript">
-            </script>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+        	<span>Clustered cache</span>
+       		<button type="submit" class="btn btn-xs btn-default" ng-click="refresh()">refresh</button>
+       	</div>
+        <div class="panel-body">
+            <span class="jsonview all">-</span>
         </div>
-        
-        <div class="col-md-4">
-            
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                	<div class="form">
-                		<label>key: </label>
-                		<input name="key" type="text">
-                		<button type="submit" class="btn btn-xs btn-default">submit</button>
-                	</div>
-                </div>
-                <div class="panel-body">
-                    <span class="jsonview all">-</span>
-                </div>
-            </div>
-        	<span class="jsonview entry"></span>
-            
-        	<script type="text/javascript">
-        		$(':submit').on('click', function() {
-        			var key = $(this).closest('.form').find('[name="key"]').val();
-        	
-        			$.getJSON("view", {key: key}, function(data) {
-        				$('.jsonview.entry').JSONView(data, {collapsed: true});
-        			});
-        		});
-        	</script>
-        </div>
-    </div>	
+    </div>
 </div>
 
 
