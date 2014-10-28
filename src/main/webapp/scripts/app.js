@@ -19,6 +19,8 @@ angular
 	return {
 		info: $resource('info').get(),
 		tests: instance.tests_tree,
+
+		tests_order: instance.tests_order,
 		add: function(options) {
 			return instance.add.call(instance, options);
 		},
@@ -81,6 +83,7 @@ angular
 	$scope.title = "HCloud Test Page";
 	$scope.info = cluster.info;
 	$scope.tests = cluster.tests;
+	$scope.tests_order = cluster.tests_order;
 	$scope.results = {mosconi0: false};
 	
 	$scope.doTest = function(event) {
@@ -111,6 +114,11 @@ angular
 			$result.JSONView(data, {collapsed: true});
 			
 			var status = !data.error? 'SUCCESS' : 'FAIL';
+			$scope.results[set_id+obj_id].status = status;
+			$scope.results[set_id+obj_id].result = data.result;
+			$scope.$apply();
+		}).fail(function() {
+			var status = 'FAIL';
 			$scope.results[set_id+obj_id].status = status;
 			$scope.results[set_id+obj_id].result = data.result;
 			$scope.$apply();

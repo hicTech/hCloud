@@ -4,10 +4,12 @@ var CLUSTER_TEST = {
 	info: {},
 	tests: [],
 	tests_tree: {},
+	tests_order: [],
 	
 	add: function(options) {
 		var set_id = options.set_id;
 		
+		this.tests_order.push(set_id);
 		this.tests_tree[set_id] = {};
 		for( var i = 0; i < options.objects_number; i++ ) {
 			var obj_id = (options.starting_object + i).toString();
@@ -51,7 +53,9 @@ var CLUSTER_TEST = {
 					cluster_mode: values.cluster_mode
 				},
 				complete: function(jqXHR, status) {
-					complete.resolve(jqXHR.responseJSON, status);
+					var json = jqXHR.responseJSON || {};
+					
+					complete.resolve(json, status);
 				}
 			});
 		}, delay*1000);

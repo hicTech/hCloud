@@ -2,6 +2,7 @@
 	<div>
 		<div class="text-center">
 			<button class="btn btn-default" ng-click="doTestAll()">run all</button>
+			<input type="number" min="1" max="12" value="2" ng-model="columns">
 			<span>filesystems: </span><span class="text-success">{{info.fs.single}}</span>
 		</div>
 		
@@ -14,22 +15,22 @@
 			<div class="col-md-1">Stato</div>
 			<div class="col-md-2"></div>
 		</div>
-
-		<div class="panel panel-default" data-set_id="{{set_id}}" ng-repeat="(set_id, set) in tests">
-			<div class="panel-heading ">
+	
+		<div class="panel panel-default" data-set_id="{{set_id}}" ng-repeat="set_id in tests_order">
+			<div class="panel-heading">
 				<div class="row">
 					<div class="col-md-5">
-						<span>cluster: </span> <span class="text-success">{{set[0].cluster_mode}}</span>
+						<span>cluster: </span> <span class="text-success">{{tests[set_id][0].cluster_mode}}</span>
 	
-						<span>mode: </span> <span class="text-success">{{set[0].run_mode}}</span>
+						<span>mode: </span> <span class="text-success">{{tests[set_id][0].run_mode}}</span>
 	
-						<span>id: </span> <span class="text-success">{{set[0].set_id}}</span>
+						<span>id: </span> <span class="text-success">{{set_id}}</span>
 					</div>
 	
-					<div class="col-md-1">{{set[0].obj_id}}</div>
-					<div class="col-md-1">{{set[0].size_mb}}</div>
-					<div class="col-md-1">{{set[0].time_sec}}</div>
-					<div class="col-md-1">{{set[0].delay_min}}</div>
+					<div class="col-md-1">{{tests[set_id][0].obj_id}}</div>
+					<div class="col-md-1">{{tests[set_id][0].size_mb}}</div>
+					<div class="col-md-1">{{tests[set_id][0].time_sec}}</div>
+					<div class="col-md-1">{{tests[set_id][0].delay_min}}</div>
 					<div class="col-md-1">
 						<div data-state ng-click="doResult($event)"></div>
 					</div>
@@ -42,7 +43,7 @@
 			
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-2" data-obj_id="{{test.obj_id}}" ng-repeat="test in set">
+					<div class="col-md-2" data-obj_id="{{test.obj_id}}" ng-repeat="test in tests[set_id]">
 						<div>
 							<span ng-switch on="!results[set_id+test.obj_id].show">
 								<span class="glyphicon glyphicon-eye-open"  ng-switch-when="true"  ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>

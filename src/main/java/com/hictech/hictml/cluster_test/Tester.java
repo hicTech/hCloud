@@ -27,7 +27,7 @@ public class Tester{
 			single_host_tester = new Tester(new SingleHostTestSystem());
 			//bigmemory_tester = new Tester(new BigmemoryTestSystem());
 			//hazelcast_tester = new Tester(new HazelcastTestSystem());
-			infinispan_tester = new Tester(new InfinispanTestSystem());
+			//infinispan_tester = new Tester(new InfinispanTestSystem());
 			inited = true;
 		}
 	}
