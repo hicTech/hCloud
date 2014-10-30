@@ -41,7 +41,7 @@ angular
 	$scope.options = {
 		starting_object: 0,
 		objects_number: 2,
-		cluster_mode: 'single_host',
+		cluster_mode: 'infinispan',
 		run_mode: 'sleep',
 		time_sec: -1,
 		delay_min: 0,
