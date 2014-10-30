@@ -46,6 +46,7 @@
 				<div class="row">
 					<div class="column col-md-{{columns}}" data-obj_id="{{test.obj_id}}" ng-repeat="test in tests[set_id]">
 						<div>
+							<strong ng-click="doTest($event)" class="text-success">{{test.obj_id}}</strong>
 							<span ng-switch on="!results[set_id+test.obj_id].show">
 								<span class="glyphicon glyphicon-eye-open"  ng-switch-when="true"  ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>
 								<span class="glyphicon glyphicon-eye-close" ng-switch-when="false" ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>
