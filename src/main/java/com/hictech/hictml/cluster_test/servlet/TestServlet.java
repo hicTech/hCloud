@@ -1,4 +1,5 @@
 package com.hictech.hictml.cluster_test.servlet;
+import static javax.servlet.http.HttpServletResponse.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,12 +63,16 @@ public class TestServlet extends HttpServlet implements ServletContextListener {
 		try {
 			Tester tester = Tester.get(cluster_mode);
 			result = tester.test(runner);
-		} catch (Exception e) {
+		}
+		catch( Exception e ) {
 			e.printStackTrace();
+			
 			error = new HashMap<String, Object>();
 			error.put("class", e.getClass().getName());
 			error.put("message", e.getMessage());
 			error.put("stack_trace", FormatUtils.printStackTrace(e));
+			
+			response.setStatus(SC_INTERNAL_SERVER_ERROR);
 		}
 		ms = System.currentTimeMillis() - ms;
 

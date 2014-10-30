@@ -2,8 +2,9 @@
 	<div>
 		<div class="text-center">
 			<button class="btn btn-default" ng-click="doTestAll()">run all</button>
-			<input type="number" min="1" max="12" value="2" ng-model="columns">
-			<span>filesystems: </span><span class="text-success">{{info.fs.single}}</span>
+			<span>number of columns:</span>
+			<input type="number" min="1" max="12" ng-model="columns" ng-click="doChangeColumns()">
+			<span>filesystems:</span><span class="text-success">{{info.fs.single}}</span>
 		</div>
 		
 		<div class="row">
@@ -43,7 +44,7 @@
 			
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-2" data-obj_id="{{test.obj_id}}" ng-repeat="test in tests[set_id]">
+					<div class="column col-md-{{columns}}" data-obj_id="{{test.obj_id}}" ng-repeat="test in tests[set_id]">
 						<div>
 							<span ng-switch on="!results[set_id+test.obj_id].show">
 								<span class="glyphicon glyphicon-eye-open"  ng-switch-when="true"  ng-click="doResult($event); results[set_id+test.obj_id].show = !results[set_id+test.obj_id].show;"></span>
@@ -55,6 +56,8 @@
 								<span class="label label-warning" ng-switch-when="WAITING">{{results[set_id+test.obj_id].status}}</span>
 								<span class="label label-success" ng-switch-when="SUCCESS">{{results[set_id+test.obj_id].status}}</span>
 								<span class="label label-danger"  ng-switch-when="FAIL">{{results[set_id+test.obj_id].status}}</span>
+								<span class="label label-danger"  ng-switch-when="ERROR">{{results[set_id+test.obj_id].status}}</span>
+								<span class="label label-danger"  ng-switch-when="UNREACHABLE">{{results[set_id+test.obj_id].status}}</span>
 								<span class="label label-default" ng-switch-default>NONE</span>
 							</span>
 							

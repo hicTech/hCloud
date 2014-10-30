@@ -31,35 +31,25 @@ var CLUSTER_TEST = {
 		}
 	},
 	
+	delay: function(set_id, obj_id) {
+		return this.tests_tree[set_id][obj_id].delay_min;
+	},
+	
 	run: function(set_id, obj_id) {
-		var waiting = new $.Deferred();
-		var complete = new $.Deferred();
-		
 		var values = this.tests_tree[set_id][obj_id];
-		var url = this.url
-		var delay = values.delay_min;
-		setTimeout(function() {
-			waiting.resolve();
-			
-			$.ajax({
-				url: url,
-				dataType: 'json',
-				data: {
-					set: set_id,
-					object: obj_id,
-					millis: values.time_millis,
-					mbytes: values.size_mb,
-					run_mode: values.run_mode,
-					cluster_mode: values.cluster_mode
-				},
-				complete: function(jqXHR, status) {
-					var json = jqXHR.responseJSON || {};
-					
-					complete.resolve(json, status);
-				}
-			});
-		}, delay*1000);
-		
-		return [waiting, complete];
+
+		return $.ajax({
+			url: this.url,
+			dataType: 'json',
+			data: {
+				set: set_id,
+				object: obj_id,
+				millis: values.time_millis,
+				mbytes: values.size_mb,
+				run_mode: values.run_mode,
+				cluster_mode: values.cluster_mode
+			}
+		});
 	}
+
 };
