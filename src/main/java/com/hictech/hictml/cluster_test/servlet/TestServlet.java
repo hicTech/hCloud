@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +20,9 @@ import com.hictech.util.h.HCommon;
 import com.hictech.util.h.HTree;
 import com.hictech.util.h.json.HJSON;
 
+@WebListener
 @WebServlet("/test")
-public class TestServlet extends HttpServlet {
+public class TestServlet extends HttpServlet implements ServletContextListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -76,6 +80,23 @@ public class TestServlet extends HttpServlet {
 		
 		response.getWriter().write(HJSON.toString(ret));
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)
+	 */
+	@Override
+	public void contextInitialized(ServletContextEvent sce) {
+		Tester.initSystems();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see javax.servlet.ServletContextListener#contextDestroyed(javax.servlet.ServletContextEvent)
+	 */
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
 	}
 
 }
