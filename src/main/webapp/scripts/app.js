@@ -48,6 +48,48 @@ angular
 		size_mb: -1
 	};
 	
+	$scope.addPreset = function() {
+		cluster.add({
+			set_id: 'scale-up',
+			objects_number: 3,
+			starting_object: 0,
+			time_sec: 240,
+			delay_min: 0,
+			size_mb: -1,
+			run_mode: 'sqrt'
+		});
+
+		cluster.add({
+			set_id: 'load-balancing',
+			objects_number: 10,
+			starting_object: 0,
+			time_sec: 10,
+			delay_min: 0,
+			size_mb: -1,
+			run_mode: 'sqrt'
+		});
+		
+		cluster.add({
+			set_id: 'lock1',
+			objects_number: 1,
+			starting_object: 0,
+			time_sec: 60,
+			delay_min: 0,
+			size_mb: -1,
+			run_mode: 'sleep'
+		});
+		
+		cluster.add({
+			set_id: 'lock2',
+			objects_number: 5,
+			starting_object: 0,
+			time_sec: 5,
+			delay_min: 0,
+			size_mb: -1,
+			run_mode: 'sqrt'
+		});
+	};
+	
 	$scope.newTest = function() {
 		$scope.options.set_id = random(5);
 		

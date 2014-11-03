@@ -50,12 +50,12 @@
                     <input id="cluster_mode_single_host" type="radio" name="cluster_mode" ng-value="'single_host'" ng-model="options.cluster_mode">
                 </li>
                 
-                <li class="list-group-item">
+                <li class="list-group-item" style="display: none">
                     <label for="cluster_mode_bigmemory">Bigmemory</label>
                     <input id="cluster_mode_bigmemory"   type="radio" name="cluster_mode" ng-value="'bigmemory'"   ng-model="options.cluster_mode">
                 </li>
                 
-                <li class="list-group-item">
+                <li class="list-group-item" style="display: none">
                     <label for="cluster_mode_hazelcast">Hazelcast</label>
                     <input id="cluster_mode_hazelcast"   type="radio" name="cluster_mode" ng-value="'hazelcast'"   ng-model="options.cluster_mode">
                 </li>
@@ -94,6 +94,7 @@
 			</dl>
 			
 			<button class="btn btn-primary" ng-click="newTest()">ADD TEST SET</button> 
+			<button class="btn btn-primary" ng-click="addPreset()">ADD PRE SET</button> 
         </div>
         
          <div id="panel3" class="menu-panel">
