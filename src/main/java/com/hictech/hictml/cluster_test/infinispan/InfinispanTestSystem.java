@@ -1,9 +1,6 @@
 package com.hictech.hictml.cluster_test.infinispan;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
-import org.infinispan.manager.CacheContainer;
+import static com.hictech.htmlplus.cache.PlusCacheInfinispan.cacheContainer;
 
 import com.hictech.hictml.cluster_test.Cache;
 import com.hictech.hictml.cluster_test.FileSystem;
@@ -13,19 +10,13 @@ import com.hictech.hictml.cluster_test.single_host.SingleHostFileSystem;
 
 public class InfinispanTestSystem implements TestSystem {
 	
-	public static CacheContainer getCacheContainer(String name) {
-		try {
-			return (CacheContainer) InitialContext.doLookup("java:jboss/infinispan/container/"+name);
-		}
-		catch( NamingException e ) {
-			throw new IllegalStateException(e);
-		}
+	
+	public InfinispanTestSystem() {
 	}
 	
 	@Override
 	public Cache getCache() {
-		System.out.println("*******************CACHE**************************");
-		return new InfinispanCache(getCacheContainer("cache").getCache());
+		return new InfinispanCache(cacheContainer().getCache("cache"));
 	}
 
 	@Override
@@ -35,8 +26,7 @@ public class InfinispanTestSystem implements TestSystem {
 
 	@Override
 	public Locker getLocker() {
-		System.out.println("*******************LOCKS**************************");
-		return new InfinispanLocker(getCacheContainer("locks").getCache());
+		return new InfinispanLocker(cacheContainer().getCache("cache"));
 	}
 
 }

@@ -50,6 +50,7 @@ angular
 	
 	$scope.addPreset = function() {
 		cluster.add({
+			cluster_mode: 'infinispan',
 			set_id: 'scale-up',
 			objects_number: 3,
 			starting_object: 0,
@@ -60,6 +61,7 @@ angular
 		});
 
 		cluster.add({
+			cluster_mode: 'infinispan',
 			set_id: 'load-balancing',
 			objects_number: 10,
 			starting_object: 0,
@@ -70,6 +72,7 @@ angular
 		});
 		
 		cluster.add({
+			cluster_mode: 'infinispan',
 			set_id: 'lock1',
 			objects_number: 1,
 			starting_object: 0,
@@ -80,6 +83,7 @@ angular
 		});
 		
 		cluster.add({
+			cluster_mode: 'infinispan',
 			set_id: 'lock2',
 			objects_number: 5,
 			starting_object: 0,

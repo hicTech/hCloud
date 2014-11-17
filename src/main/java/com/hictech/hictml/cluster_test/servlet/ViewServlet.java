@@ -1,5 +1,7 @@
 package com.hictech.hictml.cluster_test.servlet;
 
+import static com.hictech.htmlplus.cache.PlusCacheInfinispan.cacheContainer;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.infinispan.Cache;
 
-import com.hictech.hictml.cluster_test.infinispan.InfinispanTestSystem;
 import com.hictech.util.h.json.HJSON;
 
 @WebServlet("/view")
@@ -32,7 +33,7 @@ public class ViewServlet extends HttpServlet {
 		
 		String result = null;
 		 
-		Cache<Object, Object> cache = InfinispanTestSystem.getCacheContainer("cache").getCache();
+		Cache<Object, Object> cache = cacheContainer().getCache("cache");
 		if( key == null || key.length() == 0 ) {
 			result = HJSON.toString(cache);
 		}

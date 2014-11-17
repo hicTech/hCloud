@@ -22,18 +22,13 @@
 	<properties>
         <!-- Explicitly declaration of source encoding for making th build is platform independent -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-       	<!-- Define the version of the JBoss BOMs we want to import to specify tested stacks -->
-        <version.jboss.bom>8.0.0.Final</version.jboss.bom>
 
-        <!-- Maven plugin version -->
+		<!-- version properties -->		
+		<version.java>1.8</version.java>
+        <version.jboss.bom>8.0.0.Final</version.jboss.bom>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.compiler.plugin>3.1</version.compiler.plugin>
         <version.war.plugin>2.2</version.war.plugin>
-
-        <!-- maven-compiler-plugin -->
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
 	</properties>
 
 	<repositories>
@@ -90,6 +85,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
@@ -137,8 +138,8 @@
 				<version>${version.compiler.plugin}</version>
 				
 				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
+					<source>${version.java}</source>
+					<target>${version.java}</target>
 				</configuration>
 			</plugin>
 			

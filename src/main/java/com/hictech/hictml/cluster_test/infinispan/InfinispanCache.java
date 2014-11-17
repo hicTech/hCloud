@@ -16,7 +16,6 @@ public class InfinispanCache implements Cache {
 		this.cache = cache.getAdvancedCache();
 	}
 	
-	@Deprecated
 	public static void log(Object... args) {
 		StringBuilder sb = new StringBuilder();
 		
