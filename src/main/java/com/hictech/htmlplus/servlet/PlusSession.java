@@ -1,4 +1,5 @@
 package com.hictech.htmlplus.servlet;
+import static com.hictech.htmlplus.cache.PlusCacheInfinispan.lockPut;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,50 +30,38 @@ public class PlusSession {
 	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> get() throws Exception {
-		Map<String, Object> map = (Map<String, Object>) cache.get(sessionID);
-		if( map == null ) {
-			map = new HashMap<>();
-			map.put("id", sessionID);
-			
-			try {
-				cache.begin();
-				cache.lock(sessionID);
-				cache.put(sessionID, map);
-				cache.commit();
-				cache.dispose();
-			}
-			catch( Exception e ) {
-				e.printStackTrace();
-				cache.rollback();
-				
-				throw e;
-			}
-			finally {
-				cache.dispose();
-			}
-		}
+		Map<String, Object> result = null;
 		
-		return map;
-	}
-	
-	public void invalidate() throws Exception {
 		try {
 			cache.begin();
 			cache.lock(sessionID);
-			cache.put(sessionID, null);
+			
+			result = (Map<String, Object>) cache.get(sessionID);
+			if( result == null ) {
+				result = new HashMap<String, Object>();
+				result.put("id", sessionID);
+				
+				cache.put(sessionID, result);
+			}
+			
 			cache.commit();
 			cache.dispose();
 		}
 		catch( Exception e ) {
-			cache.rollback();
+			e.printStackTrace();
 			
-			throw e;
+			cache.rollback();
 		}
 		finally {
 			cache.dispose();
 		}
+		
+		return result;
 	}
 	
+	public void invalidate() throws Exception {
+		lockPut(cache, sessionID, null, null);
+	}
 	
 	@Override
 	public String toString() {

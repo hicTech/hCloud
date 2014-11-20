@@ -106,7 +106,7 @@ public class PlusServlet extends HttpServlet {
 	private void doGetCache(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
 		PrintWriter pw = httpResponse.getWriter();
 	
-		JSONValue.writeJSONString(new PlusCacheInfinispan(null), pw);
+		JSONValue.writeJSONString(new PlusCacheInfinispan(), pw);
 	}
 
 	private void doGetHosts(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {

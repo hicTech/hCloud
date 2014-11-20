@@ -2,9 +2,11 @@ package com.hictech.htmlplus.cache;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 
 import org.infinispan.AdvancedCache;
+import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 
 
@@ -25,12 +27,63 @@ public class PlusCacheInfinispan implements PlusCache {
 		}
 	}
 	
+	public static Object lockGet(PlusCacheInfinispan cache, String key) {
+		Object result = null;
+		
+		try {
+			cache.begin();
+			cache.lock(key);
+			
+			result = cache.get(key);
+			
+			cache.commit();
+			cache.dispose();
+		}
+		catch( Exception e ) {
+			e.printStackTrace();
+			
+			cache.rollback();
+		}
+		finally {
+			cache.dispose();
+		}
+		
+		return result;
+	}
+	
+	public static Object lockPut(PlusCacheInfinispan cache, String key, Object value, Runnable callback) {
+		Object result = null;
+		
+		try {
+			cache.begin();
+			cache.lock(key);
+			
+			result = cache.put(key, value);
+			if( callback != null ) {
+				callback.run();
+			}
+			
+			cache.commit();
+			cache.dispose();
+		}
+		catch( Exception e ) {
+			e.printStackTrace();
+			
+			cache.rollback();
+		}
+		finally {
+			cache.dispose();
+		}
+		
+		return result;
+	}
+	
 	private AdvancedCache<Object, Object> cache;
 	
 	private TransactionManager tx;
 	
 	public PlusCacheInfinispan() {
-		this(null);
+		this((String) null);
 	}
 	
 	public PlusCacheInfinispan(String name) {
@@ -40,6 +93,10 @@ public class PlusCacheInfinispan implements PlusCache {
 		else {
 			this.cache = cacheContainer().getCache(name).getAdvancedCache();
 		}
+	}
+	
+	public PlusCacheInfinispan(Cache<Object, Object> cache) {
+		this.cache = cache.getAdvancedCache();
 	}
 
 	@Override
@@ -107,19 +164,31 @@ public class PlusCacheInfinispan implements PlusCache {
 	}
 
 	@Override
-	public void rollback() throws Exception {
+	public void rollback() {
 		if( tx == null ) {
 			throw new IllegalStateException("enable to call a rollback because there is no active transaction");
 		}
 		
-		tx.rollback();
+		try {
+			tx.rollback();
+		}
+		catch( Exception e ) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	@Override
-	public void dispose() throws Exception {
-		if( tx != null ) {
+	public void dispose() {
+		if( tx == null ) {
+			return;
+		}
+		
+		try {
 			tx.suspend();
 			tx = null;
+		}
+		catch( SystemException e ) {
+			throw new RuntimeException(e);
 		}
 	}
 

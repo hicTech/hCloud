@@ -3,11 +3,14 @@ package com.hictech.htmlplus.servlet;
 import static com.hictech.htmlplus.cache.PlusCacheInfinispan.SESSIONS_CLIENTS;
 import static com.hictech.htmlplus.cache.PlusCacheInfinispan.SESSIONS_DEFAULT;
 import static com.hictech.htmlplus.cache.PlusCacheInfinispan.SESSIONS_HOSTS;
+import static com.hictech.htmlplus.cache.PlusCacheInfinispan.lockGet;
+import static com.hictech.htmlplus.cache.PlusCacheInfinispan.lockPut;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
@@ -21,7 +24,7 @@ import org.infinispan.notifications.cachemanagerlistener.event.CacheStoppedEvent
 
 import com.hictech.htmlplus.cache.PlusCacheInfinispan;
 
-@Listener
+@Listener(sync=false)
 @WebListener
 public class PlusListenerInfinispan implements PlusListener, ServletContextListener {
 	
@@ -80,14 +83,35 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 	@CacheStarted
 	public void cacheCreated(CacheStartedEvent event) {
 		if( event.getCacheName().equals(SESSIONS_DEFAULT) ) {
-			plusStart(event);
+			EmbeddedCacheManager  manager   = event.getCacheManager();
+			Cache<Object, Object> cache     = manager.getCache(SESSIONS_DEFAULT);
+			PlusCacheInfinispan   plusCache = new PlusCacheInfinispan(cache);
+			
+			/*
+			 * This if-else block is mandatory because the
+			 * listener is setted up as async and the
+			 * callback order will not be respected.
+			 */
+			if( lockGet(plusCache, "cluster") == null ) {
+				lockPut(plusCache, "cluster", "created", ()-> {
+					plusStart(event);
+					monadeStart(event);
+				});
+			}
+			else {
+				monadeStart(event);
+			}
+			
 		}
 	}
 	
 	@CacheStopped 
 	public void cacheStopped(CacheStoppedEvent event) {
 		if( event.getCacheName().equals(SESSIONS_DEFAULT) ) {
+			//Cache<Object, Object> cache = event.getCacheManager().getCache(event.getCacheName());
+			
 			plusClose(event);
+			monadeClose(event);
 		}
 	}
 	
@@ -96,7 +120,9 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 		if( event.isPre() ) {
 			return;
 		}
-		if( event.getCache().getName().equals(SESSIONS_HOSTS) ) {
+		if( event.getCache().getName().equals(SESSIONS_DEFAULT) ) {
+		}
+		else if( event.getCache().getName().equals(SESSIONS_HOSTS) ) {
 			hostStart(event);
 		}
 		else if( event.getCache().getName().equals(SESSIONS_CLIENTS) ) {
@@ -110,7 +136,7 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 			return;
 		}
 		
-		if( event.getCache().getName().equals(SESSIONS_HOSTS) ) {
+		else if( event.getCache().getName().equals(SESSIONS_HOSTS) ) {
 			hostClose(event);
 		}
 		else if( event.getCache().getName().equals(SESSIONS_CLIENTS) ) {
@@ -121,8 +147,6 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		init();
-		
-		monadeStart(event);
 	}
 	
 	@Override
