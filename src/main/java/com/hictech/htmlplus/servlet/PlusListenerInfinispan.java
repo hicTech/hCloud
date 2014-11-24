@@ -24,8 +24,8 @@ import org.infinispan.notifications.cachemanagerlistener.event.CacheStoppedEvent
 
 import com.hictech.htmlplus.cache.PlusCacheInfinispan;
 
-@Listener(sync=false)
 @WebListener
+@Listener(sync=false, primaryOnly=true)
 public class PlusListenerInfinispan implements PlusListener, ServletContextListener {
 	
 	private void init() {
@@ -83,6 +83,7 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 	@CacheStarted
 	public void cacheCreated(CacheStartedEvent event) {
 		if( event.getCacheName().equals(SESSIONS_DEFAULT) ) {
+			
 			EmbeddedCacheManager  manager   = event.getCacheManager();
 			Cache<Object, Object> cache     = manager.getCache(SESSIONS_DEFAULT);
 			PlusCacheInfinispan   plusCache = new PlusCacheInfinispan(cache);
@@ -101,17 +102,13 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 			else {
 				monadeStart(event);
 			}
-			
 		}
 	}
-	
+
 	@CacheStopped 
 	public void cacheStopped(CacheStoppedEvent event) {
 		if( event.getCacheName().equals(SESSIONS_DEFAULT) ) {
-			//Cache<Object, Object> cache = event.getCacheManager().getCache(event.getCacheName());
-			
 			plusClose(event);
-			monadeClose(event);
 		}
 	}
 	
@@ -151,6 +148,7 @@ public class PlusListenerInfinispan implements PlusListener, ServletContextListe
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
+		monadeClose(event);
 	}
 
 }
