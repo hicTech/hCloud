@@ -14,7 +14,7 @@ public class PlusCacheInfinispan implements PlusCache {
 	
 	final private static String CONTAINER = "java:jboss/infinispan/container/plus";
 	
-	final public static String SESSIONS_DEFAULT = "default";
+	final public static String CLUSTER = "default";
 	final public static String SESSIONS_HOSTS = "hosts";
 	final public static String SESSIONS_CLIENTS = "clients";
 
