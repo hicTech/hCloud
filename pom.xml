@@ -30,16 +30,6 @@
         <version.compiler.plugin>3.1</version.compiler.plugin>
         <version.war.plugin>2.2</version.war.plugin>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>terracotta-repository</id>
-			<url>http://www.terracotta.org/download/reflector/releases</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
 	
 	<dependencyManagement>
         <dependencies>
@@ -100,12 +90,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.7.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.terracotta</groupId>
-			<artifactId>terracotta-toolkit-runtime-ee</artifactId>
-			<version>4.0.5</version>
 		</dependency>
 
 		<dependency>
