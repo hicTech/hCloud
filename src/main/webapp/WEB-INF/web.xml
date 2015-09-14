@@ -4,4 +4,11 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1"
 >
+
+	<resource-env-ref>
+		<description>htmlplus cache</description>
+		<resource-env-ref-name>htmplus/cache</resource-env-ref-name>
+		<resource-env-ref-type>org.infinispan.manager.EmbeddedCacheManager</resource-env-ref-type>
+		<lookup-name>java:jboss/infinispan/container/plus</lookup-name>
+	</resource-env-ref>
 </web-app>
