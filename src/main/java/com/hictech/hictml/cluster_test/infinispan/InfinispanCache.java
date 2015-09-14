@@ -34,6 +34,10 @@ public class InfinispanCache implements Cache {
 			
 			
 			TransactionManager tx = cache.getTransactionManager();
+			if( tx == null ) {
+				log(cache.getTransactionManager().getClass());
+				throw new IllegalStateException("The transaction manager of cache '"+cache.getName()+"' is null");
+			}
 
 			try {
 				log("obtain lock for key ", key);
@@ -63,8 +67,10 @@ public class InfinispanCache implements Cache {
 			log("executing getOrLoad with key ", key, " on infinispan");
 			Object value = null;
 			
-			
 			TransactionManager tx = cache.getTransactionManager();
+			if( tx == null ) {
+				throw new IllegalStateException("The transaction manager of cache "+cache.getName()+" is null");
+			}
 
 			try {
 				log("obtain lock for key ", key);
@@ -105,6 +111,9 @@ public class InfinispanCache implements Cache {
 			Object oldValue = null;
 			
 			TransactionManager tx = cache.getTransactionManager();
+			if( tx == null ) {
+				throw new IllegalStateException("The transaction manager of cache "+cache.getName()+" is null");
+			}
 
 			try {
 				log("obtain lock for key ", key);
