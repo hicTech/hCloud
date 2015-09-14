@@ -25,7 +25,7 @@
 
 		<!-- version properties -->		
 		<version.java>1.8</version.java>
-        <version.jboss.bom>8.0.0.Final</version.jboss.bom>
+        <version.jboss.bom>10.0.0.Beta2</version.jboss.bom>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
         <version.compiler.plugin>3.1</version.compiler.plugin>
         <version.war.plugin>2.2</version.war.plugin>
@@ -36,7 +36,7 @@
             <!-- Import the standard WildFly BOM with Infinispan support -->
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-infinispan</artifactId>
+                <artifactId>jboss-javaee-7.0-wildfly</artifactId>
                 <version>${version.jboss.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -151,6 +151,11 @@
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
 				<version>${version.wildfly.maven.plugin}</version>
+				
+				<configuration>
+					<hostname>localhost</hostname>
+					<port>9991</port>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
