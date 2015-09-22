@@ -83,7 +83,8 @@ public class TestServlet extends HttpServlet implements ServletContextListener {
 		ret.putNotNull("result", result);
 		ret.putNotNull("error", error);
 		
-		response.getWriter().write(HJSON.toString(ret));
+		String json = HJSON.toString(ret);
+		response.getWriter().write(json);
 
 	}
 

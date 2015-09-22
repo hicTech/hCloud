@@ -32,7 +32,12 @@ public class InfoServlet extends HttpServlet {
 		fs.put("single", Tester.get().fileSystem().rootPath());
 		fs.put("cluster", Tester.get("single_host").fileSystem().rootPath());
 		
-		response.getWriter().write(HJSON.toString(tree));
+		try {
+			response.getWriter().write(HJSON.toString(tree));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

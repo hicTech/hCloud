@@ -1,5 +1,10 @@
 package com.hictech.htmlplus.cache;
 
+import static org.infinispan.configuration.cache.CacheMode.LOCAL;
+import static org.infinispan.configuration.cache.CacheMode.REPL_SYNC;
+import static org.infinispan.transaction.TransactionMode.TRANSACTIONAL;
+import static org.infinispan.util.concurrent.IsolationLevel.SERIALIZABLE;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.transaction.SystemException;
@@ -7,7 +12,12 @@ import javax.transaction.TransactionManager;
 
 import org.infinispan.AdvancedCache;
 import org.infinispan.Cache;
+import org.infinispan.configuration.cache.Configuration;
+import org.infinispan.configuration.cache.ConfigurationBuilder;
 import org.infinispan.manager.EmbeddedCacheManager;
+import org.infinispan.remoting.transport.Transport;
+import org.infinispan.transaction.LockingMode;
+import org.infinispan.transaction.lookup.GenericTransactionManagerLookup;
 
 
 public class PlusCacheInfinispan implements PlusCache {
@@ -20,11 +30,41 @@ public class PlusCacheInfinispan implements PlusCache {
 
 	public static EmbeddedCacheManager cacheContainer() {
 		try {
-			return (EmbeddedCacheManager) InitialContext.doLookup(CONTAINER);
+			EmbeddedCacheManager manager = (EmbeddedCacheManager) InitialContext.doLookup(CONTAINER);
+			manager.defineConfiguration("default", conf(manager));
+			manager.defineConfiguration("cache",   conf(manager));
+			manager.defineConfiguration("locks",   conf(manager));
+			manager.defineConfiguration("hosts",   conf(manager));
+			manager.defineConfiguration("clients", conf(manager));
+			
+			return manager;
 		}
 		catch( NamingException e ) {
 			throw new IllegalStateException(e);
 		}
+	}
+	
+	private static Configuration conf(EmbeddedCacheManager manager) {
+		Transport transport = manager.getGlobalComponentRegistry().getGlobalConfiguration().transport().transport();
+		
+		return new ConfigurationBuilder()
+			.clustering()
+				.cacheMode(transport == null? LOCAL : REPL_SYNC)
+				
+			.transaction()
+				.transactionMode(TRANSACTIONAL)
+				.transactionManagerLookup(new GenericTransactionManagerLookup())
+				.autoCommit(false)
+			
+			.lockingMode(LockingMode.PESSIMISTIC)
+				.locking()
+				.isolationLevel(SERIALIZABLE)
+				
+			.persistence()
+				.passivation(false)
+				.addSingleFileStore()
+				.purgeOnStartup(true)
+		.build();
 	}
 	
 	public static Object lockGet(PlusCacheInfinispan cache, String key) {
