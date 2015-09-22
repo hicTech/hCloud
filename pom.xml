@@ -7,42 +7,52 @@
 >
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.hictech</groupId>
-	<artifactId>hcloud</artifactId>
-	<version>0.1</version>
-	<packaging>war</packaging>
-	<name>hCloud</name>
-	<description>hCloud: the helloworld project</description>
-
-	<url>http://www.hictech.com</url>
 	<licenses>
 		<!-- TODO: Insert the license here -->
 	</licenses>
 
+	<name>hCloud</name>
+	<url>http://www.hictech.com</url>
+
+	<groupId>com.hictech</groupId>
+	<artifactId>hcloud</artifactId>
+	<version>0.1</version>
+	<description>hCloud: the test project</description>
+
+	<packaging>war</packaging>
+
 	<properties>
-        <!-- Explicitly declaration of source encoding for making th build is platform independent -->
+		<!-- Force UTF for file encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<!-- version properties -->		
+		<!-- version properties -->
 		<version.java>1.8</version.java>
-        <version.jboss.bom>10.0.0.Beta2</version.jboss.bom>
-        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-        <version.compiler.plugin>3.1</version.compiler.plugin>
-        <version.war.plugin>2.2</version.war.plugin>
+		<version.wildfly>10.0.0.CR1</version.wildfly>
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+		<version.compiler.plugin>3.1</version.compiler.plugin>
+		<version.war.plugin>2.2</version.war.plugin>
+		<version.ejb.plugin>2.5.1</version.ejb.plugin>
 	</properties>
 	
+	<repositories>
+		<repository>
+			<id>JBoss Repository</id>
+			<url>https://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
 	<dependencyManagement>
-        <dependencies>
-            <!-- Import the standard WildFly BOM with Infinispan support -->
-            <dependency>
-                <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-wildfly</artifactId>
-                <version>${version.jboss.bom}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+		<dependencies>
+			<!-- Import the standard WildFly BOM with Infinispan support -->
+			<dependency>
+				<groupId>org.wildfly</groupId>
+				<artifactId>wildfly-clustering-ee-infinispan</artifactId>
+				<version>${version.wildfly}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
     <!-- Dependencies. -->
 
@@ -61,12 +71,31 @@
             <scope>provided</scope>
         </dependency>
         
-   		<!-- Import the Infinispan Core API --> 
+		<!-- Import the JPA API -->
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		
+   		<!-- Import the Infinispan API --> 
 		<dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-core</artifactId>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>org.infinispan</groupId>
+			<artifactId>infinispan-commons</artifactId>
+            <scope>compile</scope>
+		</dependency>
+   		
+   		<!-- Import the jGroups API --> 
+		<dependency>
+			<groupId>org.jgroups</groupId>
+			<artifactId>jgroups</artifactId>
+		</dependency>
         
 		<dependency>
 			<groupId>hictech</groupId>
@@ -83,7 +112,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.5</version>
 		</dependency>
 
 		<dependency>
