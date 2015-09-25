@@ -1,0 +1,6 @@
+docker pull hictech/test-apache
+docker pull hictech/debian-wildfly-java8-hcloud
+docker run --name balancer -d -p 80:80 hictech/test-apache
+docker run -d --link balancer:balancer -v //c/Users/Andrea/Wildfly10Docker:/opt/wildfly hictech/debian-wildfly-java8-hcloud
+docker logs #id
+docker exec -i #id bash
