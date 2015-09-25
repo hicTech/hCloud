@@ -12,8 +12,11 @@ import javax.transaction.TransactionManager;
 
 import org.infinispan.AdvancedCache;
 import org.infinispan.Cache;
+import org.infinispan.commons.util.TypedProperties;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.global.GlobalConfiguration;
+import org.infinispan.configuration.global.TransportConfiguration;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.infinispan.remoting.transport.Transport;
 import org.infinispan.transaction.LockingMode;
@@ -31,6 +34,7 @@ public class PlusCacheInfinispan implements PlusCache {
 	public static EmbeddedCacheManager cacheContainer() {
 		try {
 			EmbeddedCacheManager manager = (EmbeddedCacheManager) InitialContext.doLookup(CONTAINER);
+			
 			manager.defineConfiguration("default", conf(manager));
 			manager.defineConfiguration("cache",   conf(manager));
 			manager.defineConfiguration("locks",   conf(manager));
@@ -45,7 +49,11 @@ public class PlusCacheInfinispan implements PlusCache {
 	}
 	
 	private static Configuration conf(EmbeddedCacheManager manager) {
-		Transport transport = manager.getGlobalComponentRegistry().getGlobalConfiguration().transport().transport();
+		Transport transport = manager
+				.getGlobalComponentRegistry()
+				.getGlobalConfiguration()
+				.transport()
+		.transport();
 		
 		return new ConfigurationBuilder()
 			.clustering()
@@ -59,6 +67,7 @@ public class PlusCacheInfinispan implements PlusCache {
 			.lockingMode(LockingMode.PESSIMISTIC)
 				.locking()
 				.isolationLevel(SERIALIZABLE)
+				.lockAcquisitionTimeout(600000L)
 				
 			.persistence()
 				.passivation(false)
