@@ -26,7 +26,7 @@ public class InfinispanTestSystem implements TestSystem {
 
 	@Override
 	public Locker getLocker() {
-		return new InfinispanLocker(cacheContainer().getCache("cache"));
+		return new InfinispanLocker(cacheContainer().getCache("locks"));
 	}
 
 }

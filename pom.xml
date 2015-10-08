@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>hictech</groupId>
 			<artifactId>datargilla</artifactId>
-			<version>1.0</version>
+			<version>1.0.build0001</version>
 		</dependency>
 		
 		<dependency>

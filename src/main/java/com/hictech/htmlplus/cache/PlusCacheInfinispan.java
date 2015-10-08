@@ -5,6 +5,8 @@ import static org.infinispan.configuration.cache.CacheMode.REPL_SYNC;
 import static org.infinispan.transaction.TransactionMode.TRANSACTIONAL;
 import static org.infinispan.util.concurrent.IsolationLevel.SERIALIZABLE;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.transaction.SystemException;
@@ -53,6 +55,7 @@ public class PlusCacheInfinispan implements PlusCache {
 				.getGlobalComponentRegistry()
 				.getGlobalConfiguration()
 				.transport()
+				
 		.transport();
 		
 		return new ConfigurationBuilder()
@@ -62,12 +65,13 @@ public class PlusCacheInfinispan implements PlusCache {
 			.transaction()
 				.transactionMode(TRANSACTIONAL)
 				.transactionManagerLookup(new GenericTransactionManagerLookup())
+				.cacheStopTimeout(3000000)
 				.autoCommit(false)
 			
 			.lockingMode(LockingMode.PESSIMISTIC)
 				.locking()
 				.isolationLevel(SERIALIZABLE)
-				.lockAcquisitionTimeout(600000L)
+				.lockAcquisitionTimeout(3000000)
 				
 			.persistence()
 				.passivation(false)
